@@ -106,11 +106,6 @@ public class LoadDataOnlyDemo {
             public void compute(Long vertexId, Iterator<Node> messageIterator) {
                 LOGGER.info(">> DEMO-MODE (No computation, only display) <<");
                 LOGGER.info("Passed: {} (VertexID)", vertexId);
-                IVertex<Long, Node> vertex = this.context.vertex().get();
-                List<IEdge<Long, Edge>> outEdges = context.edges().getOutEdges();
-                if (!outEdges.isEmpty()) {
-                    this.context.sendMessageToNeighbors(vertex.getValue());
-                }
             }
 
         }
