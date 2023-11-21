@@ -116,5 +116,6 @@ public class LoadDataOnlyDemo {
         IPipelineResult<?> result = submit(environment);
         PipelineResultCollect.get(result);
         environment.shutdown();
+        LOGGER.info("!!!!! Have loaded data successfully !!!!!");
     }
 }
