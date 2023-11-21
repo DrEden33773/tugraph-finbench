@@ -23,7 +23,7 @@ public class DataLoader {
                 while ((line = br.readLine()) != null) {
                     String[] tokens = line.split(splitBy);
                     long rawID = Long.parseLong(tokens[0]);
-                    long loanAmount = file.equals("Loan.csv") ? Long.parseLong(tokens[1]) : 0;
+                    double loanAmount = file.equals("Loan.csv") ? Double.parseDouble(tokens[1]) : 0;
                     list.add(new RawVertex(VertexType.Person, rawID, loanAmount));
                 }
             } catch (IOException e) {

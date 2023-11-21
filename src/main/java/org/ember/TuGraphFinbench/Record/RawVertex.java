@@ -11,14 +11,38 @@ import org.ember.TuGraphFinbench.Util.IntoTrait;
 @AllArgsConstructor
 @ToString
 public class RawVertex implements IntoTrait<Vertex> {
-    VertexType nodeType;
+    VertexType vertexType;
     long rawID;
-    long loanAmount;
+    double loanAmount;
 
     @Override
     public Vertex into() {
-        byte tags = nodeType.toByte();
+        byte tags = vertexType.toByte();
         return new Vertex((Murmur3.hash64(Long.valueOf(rawID).toString().getBytes()) << 2) | tags, rawID, loanAmount);
     }
 
+    public Case1Vertex toCase1Vertex() {
+        return new Case1Vertex(vertexType, rawID, 0.0);
+    }
+
+    public Case2Vertex toCase2Vertex() {
+        if (vertexType != VertexType.Account) {
+            return null;
+        }
+        return new Case2Vertex(rawID, 0);
+    }
+
+    public Case3Vertex toCase3Vertex() {
+        if (vertexType != VertexType.Account) {
+            return null;
+        }
+        return new Case3Vertex(rawID, 0.0);
+    }
+
+    public Case4Vertex toCase4Vertex() {
+        if (vertexType == VertexType.Account) {
+            return null;
+        }
+        return new Case4Vertex(vertexType, rawID, 0.0);
+    }
 }

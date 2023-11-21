@@ -12,7 +12,7 @@ import org.ember.TuGraphFinbench.Util.IntoTrait;
 public class Vertex implements IntoTrait<RawVertex> {
     long ID;
     long rawID;
-    long loanAmount;
+    double loanAmount;
 
     @Override
     public RawVertex into() {

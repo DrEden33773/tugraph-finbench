@@ -52,9 +52,9 @@ public class PageRank {
         envConfig.put(FileSink.OUTPUT_DIR, RESULT_FILE_PATH);
         ResultValidator.cleanResult(RESULT_FILE_PATH);
 
-        pipeline.submit((PipelineTask) pipelineTaskCxt -> {
-            Configuration conf = pipelineTaskCxt.getConfig();
-            PWindowSource<IVertex<Integer, Double>> prVertices = pipelineTaskCxt.buildSource(
+        pipeline.submit((PipelineTask) pipelineTaskCtx -> {
+            Configuration conf = pipelineTaskCtx.getConfig();
+            PWindowSource<IVertex<Integer, Double>> prVertices = pipelineTaskCtx.buildSource(
                     new FileSource<>("data/input/email_vertex", (String line) -> {
                         String[] fields = line.split(",");
                         IVertex<Integer, Double> vertex = new ValueVertex<>(
@@ -63,7 +63,7 @@ public class PageRank {
                     }), AllWindow.getInstance())
                     .withParallelism(conf.getInteger(ExampleConfigKeys.SOURCE_PARALLELISM));
 
-            PWindowSource<IEdge<Integer, Integer>> prEdges = pipelineTaskCxt.buildSource(
+            PWindowSource<IEdge<Integer, Integer>> prEdges = pipelineTaskCtx.buildSource(
                     new FileSource<>("data/input/email_edge", (String line) -> {
                         String[] fields = line.split(",");
                         IEdge<Integer, Integer> edge = new ValueEdge<>(Integer.valueOf(fields[0]),
@@ -78,7 +78,7 @@ public class PageRank {
                     .withShardNum(iterationParallelism)
                     .withBackend(BackendType.Memory)
                     .build();
-            PGraphWindow<Integer, Double, Integer> graphWindow = pipelineTaskCxt.buildWindowStreamGraph(prVertices,
+            PGraphWindow<Integer, Double, Integer> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(prVertices,
                     prEdges, graphViewDesc);
 
             SinkFunction<IVertex<Integer, Double>> sink = ExampleSinkFunctionFactory.getSinkFunction(conf);

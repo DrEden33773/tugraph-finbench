@@ -9,9 +9,9 @@ import com.antgroup.geaflow.api.graph.function.vc.VertexCentricCombineFunction;
 import com.antgroup.geaflow.api.graph.function.vc.VertexCentricComputeFunction;
 import com.antgroup.geaflow.example.function.AbstractVcFunc;
 
-public class Case1 extends VertexCentricCompute<Long, Vertex, Double, Vertex> {
+public class Case1Algorithm extends VertexCentricCompute<Long, Vertex, Double, Vertex> {
 
-    public Case1(long iterations) {
+    public Case1Algorithm(long iterations) {
         super(iterations);
     }
 
