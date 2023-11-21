@@ -1,13 +1,14 @@
 package org.ember.TuGraphFinbench;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import org.ember.TuGraphFinbench.Record.RawEdge;
 import org.ember.TuGraphFinbench.Record.RawVertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
+
+import com.google.common.io.Resources;
 
 public class DataLoader {
 
@@ -17,10 +18,14 @@ public class DataLoader {
         String[] files = { "Account.csv", "Loan.csv", "Person.csv" };
         List<RawVertex> list = new ArrayList<>();
         for (String file : files) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                br.readLine(); // skip header
-                String line = "";
-                while ((line = br.readLine()) != null) {
+            try {
+                List<String> lines = Resources.readLines(Resources.getResource(file), Charset.defaultCharset());
+                boolean isHeader = true;
+                for (String line : lines) {
+                    if (isHeader) {
+                        isHeader = false;
+                        continue;
+                    }
                     String[] tokens = line.split(splitBy);
                     long rawID = Long.parseLong(tokens[0]);
                     double loanAmount = file.equals("Loan.csv") ? Double.parseDouble(tokens[1]) : 0;
@@ -34,10 +39,15 @@ public class DataLoader {
     }
 
     static void updateAccountTransferAccount(List<RawEdge> list) {
-        try (BufferedReader br = new BufferedReader(new FileReader("AccountTransferAccount.csv"))) {
-            br.readLine(); // skip header
-            String line = "";
-            while ((line = br.readLine()) != null) {
+        try {
+            List<String> lines = Resources.readLines(Resources.getResource("AccountTransferAccount.csv"),
+                    Charset.defaultCharset());
+            boolean isHeader = true;
+            for (String line : lines) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
                 String[] tokens = line.split(splitBy);
                 long fromID = Long.parseLong(tokens[0]);
                 long toID = Long.parseLong(tokens[1]);
@@ -50,10 +60,15 @@ public class DataLoader {
     }
 
     static void updateLoanDepositAccount(List<RawEdge> list) {
-        try (BufferedReader br = new BufferedReader(new FileReader("LoanDepositAccount.csv"))) {
-            br.readLine(); // skip header
-            String line = "";
-            while ((line = br.readLine()) != null) {
+        try {
+            List<String> lines = Resources.readLines(Resources.getResource("LoanDepositAccount.csv"),
+                    Charset.defaultCharset());
+            boolean isHeader = true;
+            for (String line : lines) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
                 String[] tokens = line.split(splitBy);
                 long loanID = Long.parseLong(tokens[0]);
                 long accountID = Long.parseLong(tokens[1]);
@@ -66,10 +81,15 @@ public class DataLoader {
     }
 
     static void updatePersonApplyLoan(List<RawEdge> list) {
-        try (BufferedReader br = new BufferedReader(new FileReader("PersonApplyLoan.csv"))) {
-            br.readLine(); // skip header
-            String line = "";
-            while ((line = br.readLine()) != null) {
+        try {
+            List<String> lines = Resources.readLines(Resources.getResource("PersonApplyLoan.csv"),
+                    Charset.defaultCharset());
+            boolean isHeader = true;
+            for (String line : lines) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
                 String[] tokens = line.split(splitBy);
                 long personID = Long.parseLong(tokens[0]);
                 long loanID = Long.parseLong(tokens[1]);
@@ -81,10 +101,15 @@ public class DataLoader {
     }
 
     static void updatePersonGuaranteePerson(List<RawEdge> list) {
-        try (BufferedReader br = new BufferedReader(new FileReader("PersonGuaranteePerson.csv"))) {
-            br.readLine(); // skip header
-            String line = "";
-            while ((line = br.readLine()) != null) {
+        try {
+            List<String> lines = Resources.readLines(Resources.getResource("PersonGuaranteePerson.csv"),
+                    Charset.defaultCharset());
+            boolean isHeader = true;
+            for (String line : lines) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
                 String[] tokens = line.split(splitBy);
                 long fromID = Long.parseLong(tokens[0]);
                 long toID = Long.parseLong(tokens[1]);
@@ -96,10 +121,15 @@ public class DataLoader {
     }
 
     static void updatePersonOwnAccount(List<RawEdge> list) {
-        try (BufferedReader br = new BufferedReader(new FileReader("PersonOwnAccount.csv"))) {
-            br.readLine(); // skip header
-            String line = "";
-            while ((line = br.readLine()) != null) {
+        try {
+            List<String> lines = Resources.readLines(Resources.getResource("PersonOwnAccount.csv"),
+                    Charset.defaultCharset());
+            boolean isHeader = true;
+            for (String line : lines) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
                 String[] tokens = line.split(splitBy);
                 long personID = Long.parseLong(tokens[0]);
                 long accountID = Long.parseLong(tokens[1]);

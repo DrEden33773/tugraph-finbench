@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.ember.TuGraphFinbench.Record.Case3Vertex;
-import org.ember.TuGraphFinbench.Record.Vertex3;
 
 import com.antgroup.geaflow.api.graph.compute.VertexCentricCompute;
 import com.antgroup.geaflow.api.graph.function.vc.VertexCentricCombineFunction;
@@ -19,6 +18,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
 
     public Case3Algorithm(long iterations) {
         super(iterations);
+        assert iterations == 2L;
     }
 
     @Override
@@ -63,8 +63,10 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
 
             double res = inSum / outSum;
             BigDecimal bigDecimal = new BigDecimal(res);
-            bigDecimal = res < 1.0 ? bigDecimal.round(new MathContext(2, RoundingMode.DOWN))
-                    : bigDecimal.round(new MathContext(2, RoundingMode.HALF_UP));
+            // bigDecimal = res < 1.0 ? bigDecimal.round(new MathContext(2,
+            // RoundingMode.DOWN))
+            // : bigDecimal.round(new MathContext(2, RoundingMode.HALF_UP));
+            bigDecimal = bigDecimal.round(new MathContext(2, RoundingMode.HALF_UP));
             res = bigDecimal.doubleValue();
 
             this.context.setNewVertexValue(new Case3Vertex(currVertex.getID(), res));

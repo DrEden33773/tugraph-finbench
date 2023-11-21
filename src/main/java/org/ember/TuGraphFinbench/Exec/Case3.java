@@ -87,8 +87,7 @@ public class Case3 {
                 graphWindow.compute(new Case3Algorithm(2))
                         .compute(Env.PARALLELISM_MAX)
                         .getVertices()
-                        .sink(sink)
-                        .withParallelism(Env.PARALLELISM_MAX);
+                        .sink(sink);
             }
         });
 

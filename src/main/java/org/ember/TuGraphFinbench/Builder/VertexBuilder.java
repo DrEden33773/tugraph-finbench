@@ -25,7 +25,7 @@ public class VertexBuilder extends RichFunction implements SourceFunction<IVerte
     protected Integer readPos = null;
 
     public static List<IVertex<Long, Vertex>> buildVertices() {
-        return DataLoader.loadVertices().stream().map(RawVertex::into).map((Vertex node) -> {
+        return DataLoader.loadVertices().subList(0, 100).stream().map(RawVertex::into).map((Vertex node) -> {
             return new ValueVertex<>(node.getID(), node);
         }).collect(Collectors.toList());
     }

@@ -1,7 +1,7 @@
 package org.ember.TuGraphFinbench.Env;
 
 public class Env {
-    static final boolean PARALLEL = false;
+    static final boolean PARALLEL = true;
 
     static int GET_PARALLELISM_MAX() {
         final int PARALLELISM_MAX = Runtime.getRuntime().availableProcessors();

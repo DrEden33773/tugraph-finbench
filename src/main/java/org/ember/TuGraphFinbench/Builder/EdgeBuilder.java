@@ -25,7 +25,7 @@ public class EdgeBuilder extends RichFunction implements SourceFunction<IEdge<Lo
     protected Integer readPos = null;
 
     public static List<IEdge<Long, Edge>> buildEdges() {
-        return DataLoader.loadEdges().stream().map(RawEdge::into).map((Edge edge) -> {
+        return DataLoader.loadEdges().subList(0, 100).stream().map(RawEdge::into).map((Edge edge) -> {
             return new ValueEdge<>(edge.getSrcCodec(), edge.getDstCodec(), edge);
         }).collect(Collectors.toList());
     }
