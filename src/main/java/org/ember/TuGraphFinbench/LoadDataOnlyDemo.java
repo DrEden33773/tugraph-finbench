@@ -76,9 +76,6 @@ public class LoadDataOnlyDemo {
                 graphWindow.compute(new Algorithm(1))
                         .compute(Env.PARALLELISM_MAX)
                         .getVertices()
-                        .map((e) -> {
-                            return e;
-                        })
                         .sink(sink)
                         .withParallelism(Env.PARALLELISM_MAX);
             }
