@@ -1,6 +1,7 @@
 package org.ember.TuGraphFinbench;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.ember.TuGraphFinbench.Builder.EdgeBuilder;
 import org.ember.TuGraphFinbench.Builder.VertexBuilder;
@@ -76,7 +77,6 @@ public class LoadDataOnlyDemo {
                         .compute(Env.PARALLELISM_MAX)
                         .getVertices()
                         .map((e) -> {
-                            // TODO
                             return e;
                         })
                         .sink(sink)
@@ -109,6 +109,11 @@ public class LoadDataOnlyDemo {
             public void compute(Long vertexId, Iterator<Node> messageIterator) {
                 LOGGER.info(">> DEMO-MODE (No computation, only display) <<");
                 LOGGER.info("Passed: {} (VertexID)", vertexId);
+                IVertex<Long, Node> vertex = this.context.vertex().get();
+                List<IEdge<Long, Edge>> outEdges = context.edges().getOutEdges();
+                if (!outEdges.isEmpty()) {
+                    this.context.sendMessageToNeighbors(vertex.getValue());
+                }
             }
 
         }

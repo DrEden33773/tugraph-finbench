@@ -1,5 +1,8 @@
 package org.ember.TuGraphFinbench.Record;
 
+import lombok.ToString;
+
+@ToString
 public enum NodeType {
     Account,
     Loan,
