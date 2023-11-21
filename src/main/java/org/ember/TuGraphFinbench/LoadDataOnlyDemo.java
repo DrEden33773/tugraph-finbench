@@ -1,7 +1,3 @@
-/**
- * MainFile
- */
-
 package org.ember.TuGraphFinbench;
 
 import java.util.Iterator;
@@ -76,7 +72,14 @@ public class LoadDataOnlyDemo {
 
                 SinkFunction<IVertex<Long, Node>> sink = ExampleSinkFunctionFactory.getSinkFunction(conf);
 
-                graphWindow.compute(new Algorithm(1)).compute(Env.PARALLELISM_MAX).getVertices().sink(sink)
+                graphWindow.compute(new Algorithm(1))
+                        .compute(Env.PARALLELISM_MAX)
+                        .getVertices()
+                        .map((e) -> {
+                            // TODO
+                            return e;
+                        })
+                        .sink(sink)
                         .withParallelism(Env.PARALLELISM_MAX);
             }
         });

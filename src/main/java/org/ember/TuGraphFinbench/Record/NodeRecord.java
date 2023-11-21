@@ -1,12 +1,15 @@
 package org.ember.TuGraphFinbench.Record;
 
 import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
 import org.apache.orc.util.Murmur3;
 import org.ember.TuGraphFinbench.Util.IntoTrait;
-import lombok.AllArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@ToString
 public class NodeRecord implements IntoTrait<Node> {
     NodeType nodeType;
     long rawID;

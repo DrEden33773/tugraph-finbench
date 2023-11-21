@@ -1,9 +1,10 @@
 package org.ember.TuGraphFinbench.Record;
 
 import lombok.Data;
-import org.ember.TuGraphFinbench.Util.IntoTrait;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
+
+import org.ember.TuGraphFinbench.Util.IntoTrait;
 
 @Data
 @AllArgsConstructor
