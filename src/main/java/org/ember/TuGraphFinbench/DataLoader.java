@@ -13,7 +13,7 @@ public class DataLoader {
 
     public static final String splitBy = "\\|";
 
-    public static List<RawVertex> loadNodes() {
+    public static List<RawVertex> loadVertices() {
         String[] files = { "Account.csv", "Loan.csv", "Person.csv" };
         List<RawVertex> list = new ArrayList<>();
         for (String file : files) {
@@ -119,4 +119,8 @@ public class DataLoader {
         updatePersonOwnAccount(list);
         return list;
     }
+
+    public static List<RawVertex> rawVertices = loadVertices();
+
+    public static List<RawEdge> rawEdges = loadEdges();
 }

@@ -21,4 +21,11 @@ public class Vertex implements IntoTrait<RawVertex> {
         return new RawVertex(nodeType, rawID, loanAmount);
     }
 
+    public Vertex3 toVertex3() {
+        return new Vertex3(ID, rawID, 0.0);
+    }
+
+    public Vertex2 toVertex2() {
+        return new Vertex2(ID, rawID, 0);
+    }
 }

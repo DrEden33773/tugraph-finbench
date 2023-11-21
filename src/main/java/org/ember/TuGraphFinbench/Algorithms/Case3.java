@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 import java.util.Iterator;
 import java.util.List;
 
-import org.ember.TuGraphFinbench.Record.Vertex;
+import org.ember.TuGraphFinbench.Record.Vertex3;
 
 import com.antgroup.geaflow.api.graph.compute.VertexCentricCompute;
 import com.antgroup.geaflow.api.graph.function.vc.VertexCentricCombineFunction;
@@ -14,14 +14,14 @@ import com.antgroup.geaflow.api.graph.function.vc.VertexCentricComputeFunction;
 import com.antgroup.geaflow.example.function.AbstractVcFunc;
 import com.antgroup.geaflow.model.graph.edge.IEdge;
 
-public class Case3 extends VertexCentricCompute<Long, Vertex, Double, Double> {
+public class Case3 extends VertexCentricCompute<Long, Vertex3, Double, Double> {
 
     public Case3(long iterations) {
         super(iterations);
     }
 
     @Override
-    public VertexCentricComputeFunction<Long, Vertex, Double, Double> getComputeFunction() {
+    public VertexCentricComputeFunction<Long, Vertex3, Double, Double> getComputeFunction() {
         return new Case3ComputeFunction();
     }
 
@@ -30,10 +30,12 @@ public class Case3 extends VertexCentricCompute<Long, Vertex, Double, Double> {
         return null;
     }
 
-    public class Case3ComputeFunction extends AbstractVcFunc<Long, Vertex, Double, Double> {
+    public class Case3ComputeFunction extends AbstractVcFunc<Long, Vertex3, Double, Double> {
 
         @Override
         public void compute(Long vertexId, Iterator<Double> messageIterator) {
+            Vertex3 currVertex = this.context.vertex().get().getValue();
+
             List<IEdge<Long, Double>> edges = this.context.edges().getOutEdges();
             if (this.context.getIterationId() == 1L) {
                 for (IEdge<Long, Double> edge : edges) {
@@ -63,6 +65,8 @@ public class Case3 extends VertexCentricCompute<Long, Vertex, Double, Double> {
             bigDecimal = res < 1.0 ? bigDecimal.round(new MathContext(2, RoundingMode.DOWN))
                     : bigDecimal.round(new MathContext(2, RoundingMode.HALF_UP));
             res = bigDecimal.doubleValue();
+
+            this.context.setNewVertexValue(new Vertex3(currVertex.getID(), currVertex.getRawID(), res));
         }
     }
 }
