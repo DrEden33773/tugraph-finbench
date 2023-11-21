@@ -9,11 +9,11 @@ import org.ember.TuGraphFinbench.Util.IntoTrait;
 @Data
 @AllArgsConstructor
 @ToString
-public class EdgeRecord implements IntoTrait<Edge> {
+public class RawEdge implements IntoTrait<Edge> {
     long src;
-    NodeType srcType;
+    VertexType srcType;
     long dst;
-    NodeType dstType;
+    VertexType dstType;
     double amount;
 
     @Override

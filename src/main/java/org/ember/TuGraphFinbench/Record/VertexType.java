@@ -3,7 +3,7 @@ package org.ember.TuGraphFinbench.Record;
 import lombok.ToString;
 
 @ToString
-public enum NodeType {
+public enum VertexType {
     Account,
     Loan,
     Person;
@@ -21,7 +21,7 @@ public enum NodeType {
         }
     }
 
-    public static NodeType fromByte(byte b) {
+    public static VertexType fromByte(byte b) {
         switch (b) {
             case 0:
                 return Account;

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.ember.TuGraphFinbench.DataLoader;
 import org.ember.TuGraphFinbench.Record.Edge;
-import org.ember.TuGraphFinbench.Record.EdgeRecord;
+import org.ember.TuGraphFinbench.Record.RawEdge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class EdgeBuilder extends RichFunction implements SourceFunction<IEdge<Lo
     protected Integer readPos = null;
 
     public static List<IEdge<Long, Edge>> buildEdges() {
-        return DataLoader.loadEdges().stream().map(EdgeRecord::into).map((Edge edge) -> {
+        return DataLoader.loadEdges().stream().map(RawEdge::into).map((Edge edge) -> {
             return new ValueEdge<>(edge.getSrcCodec(), edge.getDstCodec(), edge);
         }).collect(Collectors.toList());
     }

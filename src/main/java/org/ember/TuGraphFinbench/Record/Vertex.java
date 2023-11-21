@@ -9,16 +9,16 @@ import org.ember.TuGraphFinbench.Util.IntoTrait;
 @Data
 @AllArgsConstructor
 @ToString
-public class Node implements IntoTrait<NodeRecord> {
+public class Vertex implements IntoTrait<RawVertex> {
     long ID;
     long rawID;
     long loanAmount;
 
     @Override
-    public NodeRecord into() {
+    public RawVertex into() {
         byte tags = (byte) (ID & 0b11);
-        NodeType nodeType = NodeType.fromByte(tags);
-        return new NodeRecord(nodeType, rawID, loanAmount);
+        VertexType nodeType = VertexType.fromByte(tags);
+        return new RawVertex(nodeType, rawID, loanAmount);
     }
 
 }

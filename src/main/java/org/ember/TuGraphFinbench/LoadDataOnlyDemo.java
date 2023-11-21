@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.ember.TuGraphFinbench.Builder.TinyEdgeBuilder;
 import org.ember.TuGraphFinbench.Builder.VertexBuilder;
 import org.ember.TuGraphFinbench.Env.Env;
-import org.ember.TuGraphFinbench.Record.Node;
+import org.ember.TuGraphFinbench.Record.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +52,7 @@ public class LoadDataOnlyDemo {
             public void execute(IPipelineTaskContext pipelineTaskCtx) {
                 Configuration conf = pipelineTaskCtx.getConfig();
 
-                PWindowSource<IVertex<Long, Node>> vertices = pipelineTaskCtx
+                PWindowSource<IVertex<Long, Vertex>> vertices = pipelineTaskCtx
                         .buildSource(new VertexBuilder(), AllWindow.getInstance())
                         .withParallelism(Env.PARALLELISM_MAX);
 
@@ -66,10 +66,10 @@ public class LoadDataOnlyDemo {
                         .withBackend(BackendType.Memory)
                         .build();
 
-                PGraphWindow<Long, Node, Double> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(vertices, edges,
+                PGraphWindow<Long, Vertex, Double> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(vertices, edges,
                         graphViewDesc);
 
-                SinkFunction<IVertex<Long, Node>> sink = ExampleSinkFunctionFactory.getSinkFunction(conf);
+                SinkFunction<IVertex<Long, Vertex>> sink = ExampleSinkFunctionFactory.getSinkFunction(conf);
 
                 graphWindow.compute(new TinyAlgorithm(1))
                         .compute(Env.PARALLELISM_MAX)
@@ -82,26 +82,26 @@ public class LoadDataOnlyDemo {
         return pipeline.execute();
     }
 
-    public static class TinyAlgorithm extends VertexCentricCompute<Long, Node, Double, Node> {
+    public static class TinyAlgorithm extends VertexCentricCompute<Long, Vertex, Double, Vertex> {
 
         public TinyAlgorithm(long iterations) {
             super(iterations);
         }
 
         @Override
-        public VertexCentricComputeFunction<Long, Node, Double, Node> getComputeFunction() {
+        public VertexCentricComputeFunction<Long, Vertex, Double, Vertex> getComputeFunction() {
             return new TinyComputeFunction();
         }
 
         @Override
-        public VertexCentricCombineFunction<Node> getCombineFunction() {
+        public VertexCentricCombineFunction<Vertex> getCombineFunction() {
             return null;
         }
 
-        public class TinyComputeFunction extends AbstractVcFunc<Long, Node, Double, Node> {
+        public class TinyComputeFunction extends AbstractVcFunc<Long, Vertex, Double, Vertex> {
 
             @Override
-            public void compute(Long vertexId, Iterator<Node> messageIterator) {
+            public void compute(Long vertexId, Iterator<Vertex> messageIterator) {
                 LOGGER.info(">> DEMO-MODE (No computation, only display) <<");
                 LOGGER.info("Passed: {} (VertexID)", vertexId);
             }

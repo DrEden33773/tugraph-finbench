@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.ember.TuGraphFinbench.DataLoader;
-import org.ember.TuGraphFinbench.Record.Node;
-import org.ember.TuGraphFinbench.Record.NodeRecord;
+import org.ember.TuGraphFinbench.Record.Vertex;
+import org.ember.TuGraphFinbench.Record.RawVertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +17,15 @@ import com.antgroup.geaflow.api.window.IWindow;
 import com.antgroup.geaflow.model.graph.vertex.IVertex;
 import com.antgroup.geaflow.model.graph.vertex.impl.ValueVertex;
 
-public class VertexBuilder extends RichFunction implements SourceFunction<IVertex<Long, Node>> {
+public class VertexBuilder extends RichFunction implements SourceFunction<IVertex<Long, Vertex>> {
 
     static final Logger LOGGER = LoggerFactory.getLogger(VertexBuilder.class);
     protected transient RuntimeContext runtimeContext;
-    protected List<IVertex<Long, Node>> records;
+    protected List<IVertex<Long, Vertex>> records;
     protected Integer readPos = null;
 
-    public static List<IVertex<Long, Node>> buildVertices() {
-        return DataLoader.loadNodes().stream().map(NodeRecord::into).map((Node node) -> {
+    public static List<IVertex<Long, Vertex>> buildVertices() {
+        return DataLoader.loadNodes().stream().map(RawVertex::into).map((Vertex node) -> {
             return new ValueVertex<>(node.getID(), node);
         }).collect(Collectors.toList());
     }
@@ -39,7 +39,7 @@ public class VertexBuilder extends RichFunction implements SourceFunction<IVerte
     public void init(int parallel, int index) {
         this.records = buildVertices();
         if (parallel > 1) {
-            List<IVertex<Long, Node>> allRecords = this.records;
+            List<IVertex<Long, Vertex>> allRecords = this.records;
             this.records = new ArrayList<>();
             for (int i = index; i < allRecords.size(); i += parallel) {
                 this.records.add(allRecords.get(i));
@@ -48,7 +48,8 @@ public class VertexBuilder extends RichFunction implements SourceFunction<IVerte
     }
 
     @Override
-    public boolean fetch(IWindow<IVertex<Long, Node>> window, SourceContext<IVertex<Long, Node>> ctx) throws Exception {
+    public boolean fetch(IWindow<IVertex<Long, Vertex>> window, SourceContext<IVertex<Long, Vertex>> ctx)
+            throws Exception {
         LOGGER.info(
                 "Fetching.Node(taskID: {}, batchID: {}).Start(ReadPos: {}) ... With(totalSize: {})",
                 this.runtimeContext.getTaskArgs().getTaskId(),
@@ -61,7 +62,7 @@ public class VertexBuilder extends RichFunction implements SourceFunction<IVerte
         }
 
         while (readPos < records.size()) {
-            IVertex<Long, Node> out = records.get(readPos);
+            IVertex<Long, Vertex> out = records.get(readPos);
             long windowId = window.assignWindow(out);
             if (window.windowId() == windowId) {
                 ctx.collect(out);

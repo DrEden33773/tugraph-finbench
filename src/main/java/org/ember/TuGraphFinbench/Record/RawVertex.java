@@ -10,15 +10,15 @@ import org.ember.TuGraphFinbench.Util.IntoTrait;
 @Data
 @AllArgsConstructor
 @ToString
-public class NodeRecord implements IntoTrait<Node> {
-    NodeType nodeType;
+public class RawVertex implements IntoTrait<Vertex> {
+    VertexType nodeType;
     long rawID;
     long loanAmount;
 
     @Override
-    public Node into() {
+    public Vertex into() {
         byte tags = nodeType.toByte();
-        return new Node((Murmur3.hash64(Long.valueOf(rawID).toString().getBytes()) << 2) | tags, rawID, loanAmount);
+        return new Vertex((Murmur3.hash64(Long.valueOf(rawID).toString().getBytes()) << 2) | tags, rawID, loanAmount);
     }
 
 }
