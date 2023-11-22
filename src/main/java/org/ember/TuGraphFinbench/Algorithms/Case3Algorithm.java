@@ -1,8 +1,6 @@
 package org.ember.TuGraphFinbench.Algorithms;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
 
     public Case3Algorithm(long iterations) {
         super(iterations);
-        assert iterations == 2L;
+        assert iterations == 2;
     }
 
     @Override
@@ -36,40 +34,36 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
         @Override
         public void compute(Long vertexId, Iterator<Double> messageIterator) {
             Case3Vertex currVertex = this.context.vertex().get().getValue();
-
             List<IEdge<Long, Double>> edges = this.context.edges().getOutEdges();
-            if (this.context.getIterationId() == 1L) {
-                for (IEdge<Long, Double> edge : edges) {
-                    this.context.sendMessage(edge.getTargetId(), edge.getValue());
-                }
-                return;
+            if (!edges.isEmpty()) {
+                currVertex.setHasOut(true);
             }
 
             double inSum = 0.0, outSum = 0.0;
 
-            while (messageIterator.hasNext()) {
-                inSum += messageIterator.next();
-            }
-            if (inSum == 0.0) {
+            if (this.context.getIterationId() == 1) {
+                for (IEdge<Long, Double> edge : edges) {
+                    this.context.sendMessageToNeighbors(edge.getValue());
+                    outSum += edge.getValue();
+                }
                 return;
             }
 
-            for (IEdge<Long, Double> edge : edges) {
-                outSum += edge.getValue();
+            if (messageIterator.hasNext()) {
+                currVertex.setHasIn(true);
             }
-            if (outSum == 0.0) {
+            while (messageIterator.hasNext()) {
+                inSum += messageIterator.next();
+            }
+            if (inSum == 0.0 || outSum == 0.0) {
                 return;
             }
 
             double res = inSum / outSum;
-            BigDecimal bigDecimal = new BigDecimal(res);
-            // bigDecimal = res < 1.0 ? bigDecimal.round(new MathContext(2,
-            // RoundingMode.DOWN))
-            // : bigDecimal.round(new MathContext(2, RoundingMode.HALF_UP));
-            bigDecimal = bigDecimal.round(new MathContext(2, RoundingMode.HALF_UP));
-            res = bigDecimal.doubleValue();
+            DecimalFormat dFormat = new DecimalFormat("#.00");
+            res = Double.valueOf(dFormat.format(res));
 
-            this.context.setNewVertexValue(new Case3Vertex(currVertex.getID(), res));
+            currVertex.setInOutRatio(res);
         }
     }
 }

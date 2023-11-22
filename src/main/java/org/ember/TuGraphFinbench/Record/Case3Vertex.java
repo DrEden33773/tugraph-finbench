@@ -10,4 +10,6 @@ import lombok.ToString;
 public class Case3Vertex {
     long ID;
     double inOutRatio;
+    boolean hasIn;
+    boolean hasOut;
 }

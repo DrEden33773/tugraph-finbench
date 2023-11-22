@@ -36,7 +36,7 @@ public class RawVertex implements IntoTrait<Vertex> {
         if (vertexType != VertexType.Account) {
             return null;
         }
-        return new Case3Vertex(rawID, 0.0);
+        return new Case3Vertex(rawID, 0.0, false, false);
     }
 
     public Case4Vertex toCase4Vertex() {
