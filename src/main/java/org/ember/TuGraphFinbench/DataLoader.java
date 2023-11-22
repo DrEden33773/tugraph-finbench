@@ -1,22 +1,26 @@
 package org.ember.TuGraphFinbench;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.io.Resources;
 import org.ember.TuGraphFinbench.Record.RawEdge;
 import org.ember.TuGraphFinbench.Record.RawVertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
 
-import com.google.common.io.Resources;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataLoader {
 
     public static final String splitBy = "\\|";
+    public static List<RawVertex> rawVertices = loadVertices();
+    public static List<RawEdge> rawEdges = loadEdges();
 
     public static List<RawVertex> loadVertices() {
-        String[] files = { "Account.csv", "Loan.csv", "Person.csv" };
+        String[] files = {"Account.csv", "Loan.csv", "Person.csv"};
+        VertexType[] types = {VertexType.Account, VertexType.Loan, VertexType.Person};
         List<RawVertex> list = new ArrayList<>();
+        int readPOS = 0;
         for (String file : files) {
             try {
                 List<String> lines = Resources.readLines(Resources.getResource(file), Charset.defaultCharset());
@@ -29,8 +33,9 @@ public class DataLoader {
                     String[] tokens = line.split(splitBy);
                     long rawID = Long.parseLong(tokens[0]);
                     double loanAmount = file.equals("Loan.csv") ? Double.parseDouble(tokens[1]) : 0;
-                    list.add(new RawVertex(VertexType.Person, rawID, loanAmount));
+                    list.add(new RawVertex(types[readPOS], rawID, loanAmount));
                 }
+                readPOS++;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -149,8 +154,4 @@ public class DataLoader {
         updatePersonOwnAccount(list);
         return list;
     }
-
-    public static List<RawVertex> rawVertices = loadVertices();
-
-    public static List<RawEdge> rawEdges = loadEdges();
 }
