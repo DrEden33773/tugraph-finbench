@@ -41,8 +41,10 @@ public class VertexBuilder extends RichFunction implements SourceFunction<IVerte
         if (parallel > 1) {
             List<IVertex<Long, Vertex>> allRecords = this.records;
             this.records = new ArrayList<>();
-            for (int i = index; i < allRecords.size(); i += parallel) {
-                this.records.add(allRecords.get(i));
+            for (int i = index; i < allRecords.size(); i++) {
+                if (i % parallel == index) {
+                    this.records.add(allRecords.get(i));
+                }
             }
         }
     }

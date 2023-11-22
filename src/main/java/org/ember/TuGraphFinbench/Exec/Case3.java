@@ -42,14 +42,14 @@ public class Case3 {
 
     public static final String RESULT_FILE_PATH = "./target/tmp/data/result/finbench/case3";
 
-    static List<IVertex<Long, Case3Vertex>> verticesRecord = DataLoader.loadVertices().stream()
+    static List<IVertex<Long, Case3Vertex>> verticesRecord = DataLoader.rawVertices.stream()
             .map(RawVertex::toCase3Vertex)
             .filter(vertex -> vertex != null)
             .map(vertex -> {
                 return new ValueVertex<>(vertex.getID(), vertex);
             }).collect(Collectors.toList());
 
-    static List<IEdge<Long, Double>> edgesRecord = DataLoader.loadEdges().stream()
+    static List<IEdge<Long, Double>> edgesRecord = DataLoader.rawEdges.stream()
             .map(RawEdge::toCase3Edge)
             .filter(edge -> edge != null)
             .map(edge -> {
@@ -87,10 +87,7 @@ public class Case3 {
                 graphWindow.compute(new Case3Algorithm(2))
                         .compute(Env.PARALLELISM_MAX)
                         .getVertices()
-                        .filter(vertex -> {
-                            Case3Vertex v = vertex.getValue();
-                            return v.isHasIn() && v.isHasOut();
-                        })
+                        .filter(vertex -> vertex.getValue().isHasIn() && vertex.getValue().isHasOut())
                         .sink(sink);
             }
         });

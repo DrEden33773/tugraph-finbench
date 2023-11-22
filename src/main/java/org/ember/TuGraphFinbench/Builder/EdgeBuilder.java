@@ -41,8 +41,10 @@ public class EdgeBuilder extends RichFunction implements SourceFunction<IEdge<Lo
         if (parallel > 1) {
             List<IEdge<Long, Edge>> allRecords = this.records;
             this.records = new ArrayList<>();
-            for (int i = index; i < allRecords.size(); i += parallel) {
-                this.records.add(allRecords.get(i));
+            for (int i = index; i < allRecords.size(); i++) {
+                if (i % parallel == index) {
+                    this.records.add(allRecords.get(i));
+                }
             }
         }
     }

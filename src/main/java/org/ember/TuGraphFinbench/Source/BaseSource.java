@@ -1,43 +1,26 @@
 package org.ember.TuGraphFinbench.Source;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.datanucleus.store.types.wrappers.List;
 
 import com.antgroup.geaflow.api.context.RuntimeContext;
 import com.antgroup.geaflow.api.function.RichFunction;
 import com.antgroup.geaflow.api.function.io.SourceFunction;
 import com.antgroup.geaflow.api.window.IWindow;
 
-public class DataSource<OUT> extends RichFunction implements SourceFunction<OUT> {
+public abstract class BaseSource<OUT> extends RichFunction implements SourceFunction<OUT> {
 
     protected transient RuntimeContext runtimeContext;
+    protected Integer readPos = null;
     protected List<OUT> records;
 
-    public DataSource(List<OUT> records) {
-        this.records = records;
-    }
-
-    protected Integer readPos = null;
-
     @Override
-    public void init(int parallel, int index) {
-        if (parallel > 1) {
-            List<OUT> allRecords = this.records;
-            this.records = new ArrayList<>();
-            for (int i = index; i < allRecords.size(); i++) {
-                if (i % parallel == index) {
-                    this.records.add(allRecords.get(i));
-                }
-            }
-        }
-    }
+    public abstract void init(int parallel, int index);
 
     @Override
     public boolean fetch(IWindow<OUT> window, SourceContext<OUT> ctx) throws Exception {
         if (readPos == null) {
             readPos = 0;
         }
-
         while (readPos < records.size()) {
             OUT out = records.get(readPos);
             long windowId = window.assignWindow(out);
@@ -48,9 +31,10 @@ public class DataSource<OUT> extends RichFunction implements SourceFunction<OUT>
                 break;
             }
         }
-
-        boolean result = readPos < records.size();
-
+        boolean result = false;
+        if (readPos < records.size()) {
+            result = true;
+        }
         return result;
     }
 
