@@ -1,9 +1,8 @@
 package org.ember.TuGraphFinbench.Record;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.ToString;
-
 import org.apache.orc.util.Murmur3;
 import org.ember.TuGraphFinbench.Util.IntoTrait;
 
@@ -36,7 +35,7 @@ public class RawVertex implements IntoTrait<Vertex> {
         if (vertexType != VertexType.Account) {
             return null;
         }
-        return new Case3Vertex(rawID, 0.0, false, false);
+        return new Case3Vertex(rawID, 0.0, 0.0, 0.0, false, false);
     }
 
     public Case4Vertex toCase4Vertex() {
