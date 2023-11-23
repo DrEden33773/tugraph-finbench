@@ -11,8 +11,6 @@ import org.ember.TuGraphFinbench.Record.Case3Vertex;
 import org.ember.TuGraphFinbench.Record.RawEdge;
 import org.ember.TuGraphFinbench.Record.RawVertex;
 import org.ember.TuGraphFinbench.Source.DataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.antgroup.geaflow.api.function.io.SinkFunction;
 import com.antgroup.geaflow.api.graph.PGraphWindow;
@@ -35,17 +33,6 @@ import com.antgroup.geaflow.pipeline.task.PipelineTask;
 import com.antgroup.geaflow.view.GraphViewBuilder;
 import com.antgroup.geaflow.view.IViewDesc.BackendType;
 import com.antgroup.geaflow.view.graph.GraphViewDesc;
-import org.ember.TuGraphFinbench.Algorithms.Case3Algorithm;
-import org.ember.TuGraphFinbench.DataLoader;
-import org.ember.TuGraphFinbench.Env.Env;
-import org.ember.TuGraphFinbench.Record.Case3Vertex;
-import org.ember.TuGraphFinbench.Record.RawEdge;
-import org.ember.TuGraphFinbench.Record.RawVertex;
-import org.ember.TuGraphFinbench.Source.DataSource;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Case3 {
 
