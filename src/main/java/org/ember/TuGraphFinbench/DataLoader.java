@@ -13,8 +13,6 @@ import java.util.List;
 public class DataLoader {
 
     public static final String splitBy = "\\|";
-    public static List<RawVertex> rawVertices = loadVertices();
-    public static List<RawEdge> rawEdges = loadEdges();
 
     public static List<RawVertex> loadVertices() {
         String[] files = {"Account.csv", "Loan.csv", "Person.csv"};

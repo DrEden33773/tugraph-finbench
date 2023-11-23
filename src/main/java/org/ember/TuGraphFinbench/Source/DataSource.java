@@ -1,23 +1,22 @@
 package org.ember.TuGraphFinbench.Source;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.antgroup.geaflow.api.context.RuntimeContext;
 import com.antgroup.geaflow.api.function.RichFunction;
 import com.antgroup.geaflow.api.function.io.SourceFunction;
 import com.antgroup.geaflow.api.window.IWindow;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataSource<OUT> extends RichFunction implements SourceFunction<OUT> {
 
     protected transient RuntimeContext runtimeContext;
     protected List<OUT> records;
+    protected Integer readPos = null;
 
     public DataSource(List<OUT> records) {
         this.records = records;
     }
-
-    protected Integer readPos = null;
 
     @Override
     public void init(int parallel, int index) {
@@ -49,9 +48,7 @@ public class DataSource<OUT> extends RichFunction implements SourceFunction<OUT>
             }
         }
 
-        boolean result = readPos < records.size();
-
-        return result;
+        return readPos < records.size();
     }
 
     @Override
