@@ -6,6 +6,8 @@ import lombok.ToString;
 import org.apache.orc.util.Murmur3;
 import org.ember.TuGraphFinbench.Util.IntoTrait;
 
+import java.util.ArrayList;
+
 @Data
 @AllArgsConstructor
 @ToString
@@ -28,7 +30,7 @@ public class RawVertex implements IntoTrait<Vertex> {
         if (vertexType != VertexType.Account) {
             return null;
         }
-        return new Case2Vertex(rawID, 0);
+        return new Case2Vertex(rawID, 0, new ArrayList<>());
     }
 
     public Case3Vertex toCase3Vertex() {
