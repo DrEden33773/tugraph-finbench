@@ -76,6 +76,7 @@ public class Case2 {
             graphWindow.compute(new Case2Algorithm(4))
                     .compute(Env.PARALLELISM_MAX)
                     .getVertices()
+                    .filter(vertex -> vertex.getValue().getRingCount() > 0)
                     .sink(sink);
         });
 

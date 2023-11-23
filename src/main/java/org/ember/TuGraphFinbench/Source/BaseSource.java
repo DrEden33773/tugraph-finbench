@@ -1,11 +1,10 @@
 package org.ember.TuGraphFinbench.Source;
 
-import org.datanucleus.store.types.wrappers.List;
-
 import com.antgroup.geaflow.api.context.RuntimeContext;
 import com.antgroup.geaflow.api.function.RichFunction;
 import com.antgroup.geaflow.api.function.io.SourceFunction;
 import com.antgroup.geaflow.api.window.IWindow;
+import org.datanucleus.store.types.wrappers.List;
 
 public abstract class BaseSource<OUT> extends RichFunction implements SourceFunction<OUT> {
 
@@ -31,11 +30,7 @@ public abstract class BaseSource<OUT> extends RichFunction implements SourceFunc
                 break;
             }
         }
-        boolean result = false;
-        if (readPos < records.size()) {
-            result = true;
-        }
-        return result;
+        return readPos < records.size();
     }
 
     @Override
