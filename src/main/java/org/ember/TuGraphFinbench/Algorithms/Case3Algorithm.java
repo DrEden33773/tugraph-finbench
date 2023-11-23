@@ -1,16 +1,15 @@
 package org.ember.TuGraphFinbench.Algorithms;
 
-import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.List;
-
-import org.ember.TuGraphFinbench.Record.Case3Vertex;
-
 import com.antgroup.geaflow.api.graph.compute.VertexCentricCompute;
 import com.antgroup.geaflow.api.graph.function.vc.VertexCentricCombineFunction;
 import com.antgroup.geaflow.api.graph.function.vc.VertexCentricComputeFunction;
 import com.antgroup.geaflow.example.function.AbstractVcFunc;
 import com.antgroup.geaflow.model.graph.edge.IEdge;
+import org.ember.TuGraphFinbench.Record.Case3Vertex;
+
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.List;
 
 public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Double, Double> {
 
@@ -29,7 +28,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
         return null;
     }
 
-    public class Case3ComputeFunction extends AbstractVcFunc<Long, Case3Vertex, Double, Double> {
+    public static class Case3ComputeFunction extends AbstractVcFunc<Long, Case3Vertex, Double, Double> {
 
         @Override
         public void compute(Long vertexId, Iterator<Double> messageIterator) {
@@ -61,7 +60,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
 
             double res = inSum / outSum;
             DecimalFormat dFormat = new DecimalFormat("#.00");
-            res = Double.valueOf(dFormat.format(res));
+            res = Double.parseDouble(dFormat.format(res));
 
             currVertex.setInOutRatio(res);
         }
