@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="finished first version of `Case2`, but the same bug of `Case3` occurred">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Refactored/RefactoredCase3Algorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Source/RefactoredDataSource.java" afterDir="false" />
+    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="refactor succeeded, Case3 works fine (with format still out of requirements)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case3Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case3Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/DataLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/RawVertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/RawVertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase3.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +136,7 @@
       <recent name="org.ember.TuGraphFinbench.Algorithms" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.RefactoredCase3">
+  <component name="RunManager" selected="Application.RefactoredCase2">
     <configuration name="Case2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case2" />
       <module name="tugraph-finbench" />
@@ -166,6 +163,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RefactoredCase2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.RefactoredCase2" />
+      <module name="tugraph-finbench" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ember.TuGraphFinbench.Exec.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RefactoredCase3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.RefactoredCase3" />
       <module name="tugraph-finbench" />
@@ -181,6 +191,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RefactoredCase2" />
         <item itemvalue="Application.RefactoredCase3" />
         <item itemvalue="Application.Case2" />
         <item itemvalue="Application.Case3" />
@@ -205,7 +216,7 @@
       <workItem from="1700739520943" duration="865000" />
       <workItem from="1700765472409" duration="547000" />
       <workItem from="1700800940725" duration="2514000" />
-      <workItem from="1700818886672" duration="3538000" />
+      <workItem from="1700818886672" duration="5052000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -239,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700725248344</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactor succeeded, Case3 works fine (with format still out of requirements)">
+      <option name="closed" value="true" />
+      <created>1700822579632</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1700822579632</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +270,8 @@
     <MESSAGE value="try to deal with `Case2`" />
     <MESSAGE value="fixed `Case3Algorithm`'s bug" />
     <MESSAGE value="finished first version of `Case2`, but the same bug of `Case3` occurred" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished first version of `Case2`, but the same bug of `Case3` occurred" />
+    <MESSAGE value="refactor succeeded, Case3 works fine (with format still out of requirements)" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor succeeded, Case3 works fine (with format still out of requirements)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

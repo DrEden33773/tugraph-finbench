@@ -27,7 +27,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
     public VertexCentricCombineFunction<Double> getCombineFunction() {
         return null;
     }
-    
+
     public static class Case3ComputeFunction extends AbstractVcFunc<Long, Case3Vertex, Double, Double> {
 
         @Override
@@ -62,6 +62,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
             }
 
             double res = inSum / outSum;
+//            res /= 1e8; // unit transfer
             final DecimalFormat dFormat = new DecimalFormat("#.00");
             res = Double.parseDouble(dFormat.format(res));
 
