@@ -117,7 +117,7 @@ public class Case1 {
                     .filter(vertex -> vertex.getValue().getNthLayer() == 4)
                     .map(vertex -> vertex.getValue().getID() + "|" + vertex.getValue().getLoanAmountSum())
                     .sink(sink)
-                    .withParallelism(1);
+                    .withParallelism(Env.SINK_PARALLELISM_MAX);
         });
 
         return pipeline.execute();

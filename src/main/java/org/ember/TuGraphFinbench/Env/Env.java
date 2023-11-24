@@ -1,6 +1,7 @@
 package org.ember.TuGraphFinbench.Env;
 
 public class Env {
+    public static final int SINK_PARALLELISM_MAX = 1;
     static final boolean PARALLEL = true;
     public static final int PARALLELISM_MAX = PARALLEL ? GET_PARALLELISM_MAX() : 1;
 
