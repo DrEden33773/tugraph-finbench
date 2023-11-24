@@ -34,14 +34,14 @@ public class RefactoredCase3 {
     public static final String RESULT_FILE_PATH = "./target/tmp/data/result/finbench/case3";
     public static final String[] vertexFilePaths = {"Account.csv"};
     public static final String[] edgeFilePaths = {"AccountTransferAccount.csv"};
-    public static final FileLineParser<IVertex<Long, Case3Vertex>>[] vertexParsers = new FileLineParser[]{(String line) -> {
+    public static final FileLineParser<IVertex<Long, Case3Vertex>>[] vertexParsers = new FileLineParser[]{(final String line) -> {
         final String[] fields = line.split("\\|");
         final long accountID = Long.parseLong(fields[0]);
         final Case3Vertex case3Vertex = new Case3Vertex(accountID, 0, 0, 0, false, false);
         final IVertex<Long, Case3Vertex> vertex = new ValueVertex<>(accountID, case3Vertex);
         return Collections.singletonList(vertex);
     }};
-    public static final FileLineParser<IEdge<Long, Double>>[] edgeParsers = new FileLineParser[]{(String line) -> {
+    public static final FileLineParser<IEdge<Long, Double>>[] edgeParsers = new FileLineParser[]{(final String line) -> {
         final String[] fields = line.split("\\|");
         final long srcID = Long.parseLong(fields[0]);
         final long dstID = Long.parseLong(fields[1]);

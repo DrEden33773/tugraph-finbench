@@ -1,7 +1,7 @@
 package org.ember.TuGraphFinbench.Record;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.ToString;
 
 @Data
@@ -9,6 +9,8 @@ import lombok.ToString;
 @ToString
 public class Case1Vertex {
     VertexType vertexType;
-    Long ID;
-    Double loadAmountSum;
+    long ID;
+    double loanAmountSum;
+    /* MUST START WITH 0 */
+    int nthLayer;
 }

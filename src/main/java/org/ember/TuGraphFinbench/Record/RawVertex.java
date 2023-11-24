@@ -35,7 +35,7 @@ public class RawVertex implements IntoTrait<Vertex> {
     }
 
     public Case1Vertex toCase1Vertex() {
-        return new Case1Vertex(vertexType, rawID, 0.0);
+        return new Case1Vertex(vertexType, rawID, 0.0, 0);
     }
 
     public Case2Vertex toCase2Vertex() {
