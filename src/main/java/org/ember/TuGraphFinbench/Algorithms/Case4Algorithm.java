@@ -158,7 +158,7 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
             currVLayer2LoanAmountSum /= 1e8;
             currVLayer3LoanAmountSum /= 1e8;
             // round half up
-            DecimalFormat dFormat = new DecimalFormat("#.00");
+            final DecimalFormat dFormat = new DecimalFormat("#.00");
             currV.setLayer1LoanAmountSum(Double.parseDouble(dFormat.format(currVLayer1LoanAmountSum)));
             currV.setLayer2LoanAmountSum(Double.parseDouble(dFormat.format(currVLayer2LoanAmountSum)));
             currV.setLayer3LoanAmountSum(Double.parseDouble(dFormat.format(currVLayer3LoanAmountSum)));
