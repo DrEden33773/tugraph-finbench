@@ -65,21 +65,19 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             if (currVertex.getVertexType() != VertexType.Account) {
                 return;
             }
-            // update: loanAmountSum, nthLayer
+            // update: layer0LoanAmountSum, nthLayer
             double loanAmountSum = currVertex.getLoanAmountSum();
-            if (messageIterator.hasNext() && messageIterator.next().getLeft() == 1) {
-                currVertex.setNthLayer(2);
-            } else {
-                return; // does not satisfy: loan -> account
-            }
             while (messageIterator.hasNext()) {
                 final ImmutablePair<Integer, Double> message = messageIterator.next();
                 if (message.getLeft() == 1) {
+                    currVertex.setNthLayer(2);
                     loanAmountSum += message.getRight();
+                } else {
+                    return; // does not satisfy: loan -> account
                 }
             }
             currVertex.setLoanAmountSum(loanAmountSum);
-            // send: loanAmountSum(updated)
+            // send: layer0LoanAmountSum(updated)
             this.context.sendMessageToNeighbors(new ImmutablePair<>(2, loanAmountSum));
         }
 
@@ -88,21 +86,19 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             if (currVertex.getVertexType() != VertexType.Account) {
                 return;
             }
-            // update: loanAmountSum, nthLayer
+            // update: layer0LoanAmountSum, nthLayer
             double loanAmountSum = currVertex.getLoanAmountSum();
-            if (messageIterator.hasNext() && messageIterator.next().getLeft() == 2) {
-                currVertex.setNthLayer(3);
-            } else {
-                return; // does not satisfy: (loan -> account) -> account
-            }
             while (messageIterator.hasNext()) {
                 final ImmutablePair<Integer, Double> message = messageIterator.next();
                 if (message.getLeft() == 2) {
+                    currVertex.setNthLayer(3);
                     loanAmountSum += message.getRight();
+                } else {
+                    return; // does not satisfy: (loan -> account) -> account
                 }
             }
             currVertex.setLoanAmountSum(loanAmountSum);
-            // send: loanAmountSum(updated)
+            // send: layer0LoanAmountSum(updated)
             this.context.sendMessageToNeighbors(new ImmutablePair<>(3, loanAmountSum));
         }
 
@@ -111,17 +107,15 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             if (currVertex.getVertexType() != VertexType.Person) {
                 return;
             }
-            // update: loanAmountSum
+            // update: layer0LoanAmountSum
             double loanAmountSum = currVertex.getLoanAmountSum();
-            if (messageIterator.hasNext() && messageIterator.next().getLeft() == 3) {
-                currVertex.setNthLayer(4);
-            } else {
-                return; // does not satisfy: ((loan -> account) -> account) -> person
-            }
             while (messageIterator.hasNext()) {
                 final ImmutablePair<Integer, Double> message = messageIterator.next();
                 if (message.getLeft() == 3) {
+                    currVertex.setNthLayer(4);
                     loanAmountSum += message.getRight();
+                } else {
+                    return; // does not satisfy: ((loan -> account) -> account) -> person
                 }
             }
             currVertex.setLoanAmountSum(loanAmountSum);
@@ -130,7 +124,7 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             // #.00
             final DecimalFormat dFormat = new DecimalFormat("#.00");
             loanAmountSum = Double.parseDouble(dFormat.format(loanAmountSum));
-            // update: loanAmountSum
+            // update: layer0LoanAmountSum
             currVertex.setLoanAmountSum(loanAmountSum);
         }
     }

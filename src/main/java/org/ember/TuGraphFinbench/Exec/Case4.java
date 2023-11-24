@@ -23,6 +23,7 @@ import com.antgroup.geaflow.pipeline.task.PipelineTask;
 import com.antgroup.geaflow.view.GraphViewBuilder;
 import com.antgroup.geaflow.view.IViewDesc;
 import com.antgroup.geaflow.view.graph.GraphViewDesc;
+import org.ember.TuGraphFinbench.Algorithms.Case4Algorithm;
 import org.ember.TuGraphFinbench.Env.Env;
 import org.ember.TuGraphFinbench.Record.Case4Vertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
@@ -39,7 +40,7 @@ public class Case4 {
             (final String line) -> {
                 final String[] fields = line.split("\\|");
                 final long personID = Long.parseLong(fields[0]);
-                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Person, personID, 0);
+                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Person, personID, 0, 0, 0, 0, 0);
                 final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(personID, case4Vertex);
                 return Collections.singletonList(vertex);
             }, // Person.csv
@@ -47,7 +48,7 @@ public class Case4 {
                 final String[] fields = line.split("\\|");
                 final long loanID = Long.parseLong(fields[0]);
                 final double loanAmount = Double.parseDouble(fields[1]);
-                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Loan, loanID, loanAmount);
+                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Loan, loanID, loanAmount, 0, 0, 0, 0);
                 final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(loanID, case4Vertex);
                 return Collections.singletonList(vertex);
             }, // Loan.csv
@@ -97,7 +98,13 @@ public class Case4 {
 
             final SinkFunction<String> sink = new FileSink<>();
 
-            // TODO -> Case4Algorithm
+            graphWindow.compute(new Case4Algorithm(5))
+                    .compute(Env.PARALLELISM_MAX)
+                    .getVertices()
+                    .filter(vertex -> vertex.getValue().getHighestLayer() > 0)
+                    .map(vertex -> vertex.getValue().getID() + "|" + vertex.getValue().getHighestLayerLoanAmountSum())
+                    .sink(sink)
+                    .withParallelism(Env.SINK_PARALLELISM_MAX);
         });
 
         return pipeline.execute();

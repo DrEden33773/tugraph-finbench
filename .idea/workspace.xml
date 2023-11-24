@@ -4,27 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="REMOVED: all unused dead code">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Algorithm.java" afterDir="false" />
+    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="refactor">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case1Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case1Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case2Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case2Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case3Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case3Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Refactored/RefactoredCase3Algorithm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Algorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Edge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case2Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case2Edge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case2Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case2Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case3Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case3Edge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case3Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case3Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Edge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Source/DataSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Source/DataSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Source/RefactoredDataSource.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +138,7 @@
       <recent name="org.ember.TuGraphFinbench.Algorithms" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Case1">
+  <component name="RunManager" selected="Application.Case4">
     <configuration name="Case1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case1" />
       <module name="tugraph-finbench" />
@@ -205,8 +191,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Case3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case3" />
+    <configuration name="Case4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case4" />
       <module name="tugraph-finbench" />
       <extension name="coverage">
         <pattern>
@@ -220,11 +206,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Case4" />
         <item itemvalue="Application.Case1" />
         <item itemvalue="Application.RefactoredCase2" />
         <item itemvalue="Application.RefactoredCase3" />
         <item itemvalue="Application.Case2" />
-        <item itemvalue="Application.Case3" />
       </list>
     </recent_temporary>
   </component>
@@ -247,7 +233,7 @@
       <workItem from="1700765472409" duration="547000" />
       <workItem from="1700800940725" duration="2514000" />
       <workItem from="1700818886672" duration="15707000" />
-      <workItem from="1700849994653" duration="2279000" />
+      <workItem from="1700849994653" duration="9779000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -321,7 +307,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700850697855</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="refactor">
+      <option name="closed" value="true" />
+      <created>1700852308263</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1700852308263</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,7 +332,8 @@
     <MESSAGE value="Case1 works fine (with format still out of requirements)" />
     <MESSAGE value="the last job: figure out Case4Algorithm, keep the output id ascending." />
     <MESSAGE value="REMOVED: all unused dead code" />
-    <option name="LAST_COMMIT_MESSAGE" value="REMOVED: all unused dead code" />
+    <MESSAGE value="refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
