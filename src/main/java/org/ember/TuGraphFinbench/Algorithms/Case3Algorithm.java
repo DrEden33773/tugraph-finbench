@@ -31,7 +31,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
     public static class Case3ComputeFunction extends AbstractVcFunc<Long, Case3Vertex, Double, Double> {
 
         @Override
-        public void compute(Long vertexId, Iterator<Double> messageIterator) {
+        public void compute(final Long vertexId, final Iterator<Double> messageIterator) {
             final Case3Vertex currVertex = this.context.vertex().get().getValue();
 
             double inSum = currVertex.getInSum(), outSum = currVertex.getOutSum();
@@ -62,7 +62,6 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
             }
 
             double res = inSum / outSum;
-//            res /= 1e8; // unit transfer
             final DecimalFormat dFormat = new DecimalFormat("#.00");
             res = Double.parseDouble(dFormat.format(res));
 

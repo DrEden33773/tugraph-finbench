@@ -26,7 +26,7 @@ import com.antgroup.geaflow.view.graph.GraphViewDesc;
 import org.ember.TuGraphFinbench.Env.Env;
 import org.ember.TuGraphFinbench.Record.Case4Vertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
-import org.ember.TuGraphFinbench.Source.RefactoredDataSource;
+import org.ember.TuGraphFinbench.Source.DataSource;
 
 import java.util.Collections;
 
@@ -79,11 +79,11 @@ public class Case4 {
 
         pipeline.submit((PipelineTask) pipelineTaskCtx -> {
             final PWindowSource<IVertex<Long, Case4Vertex>> vertices = pipelineTaskCtx.buildSource(
-                    new RefactoredDataSource<>(vertexFilePaths, vertexParsers), AllWindow.getInstance()
+                    new DataSource<>(vertexFilePaths, vertexParsers), AllWindow.getInstance()
             ).withParallelism(Env.PARALLELISM_MAX);
 
             final PWindowSource<IEdge<Long, Null>> edges = pipelineTaskCtx.buildSource(
-                    new RefactoredDataSource<>(edgeFilePaths, edgeParsers), AllWindow.getInstance()
+                    new DataSource<>(edgeFilePaths, edgeParsers), AllWindow.getInstance()
             ).withParallelism(Env.PARALLELISM_MAX);
 
             final GraphViewDesc graphViewDesc = GraphViewBuilder

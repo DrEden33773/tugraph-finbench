@@ -30,7 +30,7 @@ public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null
 
     public static class Case2ComputeFunction extends AbstractVcFunc<Long, Case2Vertex, Null, List<MutablePair<Long, Long>>> {
         @Override
-        public void compute(Long vertexId, Iterator<List<MutablePair<Long, Long>>> messageIterator) {
+        public void compute(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
             switch ((int) this.context.getIterationId()) {
                 case 1:
                     computeIter1(vertexId);
@@ -49,13 +49,13 @@ public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null
             }
         }
 
-        void computeIter1(Long vertexId) {
+        void computeIter1(final Long vertexId) {
             List<MutablePair<Long, Long>> toSend = new ArrayList<>(1);
             toSend.add(new MutablePair<>(vertexId, vertexId));
             this.context.sendMessageToNeighbors(toSend);
         }
 
-        void computeIter2(Long vertexId, Iterator<List<MutablePair<Long, Long>>> messageIterator) {
+        void computeIter2(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
             Case2Vertex currentVertex = this.context.vertex().get().getValue();
             // update currentVertex's prevAncestors
             messageIterator.forEachRemaining(currentVertex.getPrevAncestors()::addAll);
@@ -68,12 +68,12 @@ public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null
             this.context.sendMessageToNeighbors(toSend);
         }
 
-        void computeIter3(Long vertexId, Iterator<List<MutablePair<Long, Long>>> messageIterator) {
+        void computeIter3(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
             // same as iter2
             computeIter2(vertexId, messageIterator);
         }
 
-        void computeIter4(Long vertexId, Iterator<List<MutablePair<Long, Long>>> messageIterator) {
+        void computeIter4(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
             Case2Vertex currentVertex = this.context.vertex().get().getValue();
             // iterate over currentVertex's prevAncestors
             // if prevAncestor's ancestorID == currentVertexID, then ringCount++

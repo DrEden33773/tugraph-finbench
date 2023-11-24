@@ -1,12 +1,10 @@
 package org.ember.TuGraphFinbench.Record;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
-import lombok.ToString;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor
-@ToString
 public class Case1Edge {
     EdgeType edgeType;
     long srcID;

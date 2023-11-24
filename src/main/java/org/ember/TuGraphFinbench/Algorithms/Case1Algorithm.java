@@ -32,7 +32,7 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
     public static class Case1ComputeFunction extends AbstractVcFunc<Long, Case1Vertex, Null, ImmutablePair<Integer, Double>> {
 
         @Override
-        public void compute(Long vertexId, Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void compute(final Long vertexId, final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
             switch ((int) this.context.getIterationId()) {
                 case 1:
                     computeIter1();
@@ -60,7 +60,7 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             this.context.sendMessageToNeighbors(new ImmutablePair<>(1, currVertex.getLoanAmountSum()));
         }
 
-        public void computeIter2(Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void computeIter2(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
             final Case1Vertex currVertex = this.context.vertex().get().getValue();
             if (currVertex.getVertexType() != VertexType.Account) {
                 return;
@@ -83,7 +83,7 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             this.context.sendMessageToNeighbors(new ImmutablePair<>(2, loanAmountSum));
         }
 
-        public void computeIter3(Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void computeIter3(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
             final Case1Vertex currVertex = this.context.vertex().get().getValue();
             if (currVertex.getVertexType() != VertexType.Account) {
                 return;
@@ -106,7 +106,7 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             this.context.sendMessageToNeighbors(new ImmutablePair<>(3, loanAmountSum));
         }
 
-        public void computeIter4(Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void computeIter4(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
             final Case1Vertex currVertex = this.context.vertex().get().getValue();
             if (currVertex.getVertexType() != VertexType.Person) {
                 return;
