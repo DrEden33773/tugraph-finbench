@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class Case2 {
     public static final String RESULT_FILE_PATH = "./target/tmp/data/result/finbench/case2";
 
@@ -83,6 +84,7 @@ public class Case2 {
         return pipeline.execute();
     }
 
+    @Deprecated
     public static void main(String[] args) {
         final Environment environment = EnvironmentUtil.loadEnvironment(args);
         final IPipelineResult<?> result = submit(environment);

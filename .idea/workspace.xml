@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="refactor succeeded, Case2 works fine (with format still out of requirements)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case1Algorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" afterDir="false" />
+    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="Case1 works fine (with format still out of requirements)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RefactoredCase3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/RawVertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/RawVertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Vertex.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +232,8 @@
       <workItem from="1700739520943" duration="865000" />
       <workItem from="1700765472409" duration="547000" />
       <workItem from="1700800940725" duration="2514000" />
-      <workItem from="1700818886672" duration="12339000" />
+      <workItem from="1700818886672" duration="15707000" />
+      <workItem from="1700849994653" duration="190000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -283,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700824019174</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Case1 works fine (with format still out of requirements)">
+      <option name="closed" value="true" />
+      <created>1700833506967</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1700833506967</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,7 +305,8 @@
     <MESSAGE value="finished first version of `Case2`, but the same bug of `Case3` occurred" />
     <MESSAGE value="refactor succeeded, Case3 works fine (with format still out of requirements)" />
     <MESSAGE value="refactor succeeded, Case2 works fine (with format still out of requirements)" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor succeeded, Case2 works fine (with format still out of requirements)" />
+    <MESSAGE value="Case1 works fine (with format still out of requirements)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Case1 works fine (with format still out of requirements)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -312,12 +321,12 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case3.java</url>
-          <line>87</line>
+          <line>89</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case2.java</url>
-          <line>87</line>
+          <line>89</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>

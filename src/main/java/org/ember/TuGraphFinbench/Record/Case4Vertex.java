@@ -1,7 +1,7 @@
 package org.ember.TuGraphFinbench.Record;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.ToString;
 
 @Data
@@ -9,6 +9,6 @@ import lombok.ToString;
 @ToString
 public class Case4Vertex {
     VertexType vertexType;
-    Long ID;
-    Double loanAmountSum;
+    long ID;
+    double loanAmountSum;
 }
