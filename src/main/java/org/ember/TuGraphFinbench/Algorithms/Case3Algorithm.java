@@ -9,9 +9,9 @@ import org.ember.TuGraphFinbench.Record.Case3Vertex;
 
 import java.text.DecimalFormat;
 import java.util.Iterator;
-import java.util.List;
 
 public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Double, Double> {
+
 
     public Case3Algorithm(long iterations) {
         super(iterations);
@@ -27,21 +27,22 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
     public VertexCentricCombineFunction<Double> getCombineFunction() {
         return null;
     }
-
+    
     public static class Case3ComputeFunction extends AbstractVcFunc<Long, Case3Vertex, Double, Double> {
 
         @Override
         public void compute(Long vertexId, Iterator<Double> messageIterator) {
-            Case3Vertex currVertex = this.context.vertex().get().getValue();
-            List<IEdge<Long, Double>> edges = this.context.edges().getOutEdges();
-            if (!edges.isEmpty()) {
-                currVertex.setHasOut(true);
-            }
+            final Case3Vertex currVertex = this.context.vertex().get().getValue();
 
             double inSum = currVertex.getInSum(), outSum = currVertex.getOutSum();
 
             if (this.context.getIterationId() == 1) {
-                for (IEdge<Long, Double> edge : edges) {
+                final Iterator<IEdge<Long, Double>> edges = this.context.edges().getOutEdges().iterator();
+                if (edges.hasNext()) {
+                    currVertex.setHasOut(true);
+                }
+                while (edges.hasNext()) {
+                    final IEdge<Long, Double> edge = edges.next();
                     this.context.sendMessageToNeighbors(edge.getValue());
                     outSum += edge.getValue();
                     currVertex.setOutSum(outSum);
@@ -61,7 +62,7 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
             }
 
             double res = inSum / outSum;
-            DecimalFormat dFormat = new DecimalFormat("#.00");
+            final DecimalFormat dFormat = new DecimalFormat("#.00");
             res = Double.parseDouble(dFormat.format(res));
 
             currVertex.setInOutRatio(res);

@@ -15,20 +15,20 @@ public class DataLoader {
     public static final String splitBy = "\\|";
 
     public static List<RawVertex> loadVertices() {
-        String[] files = {"Account.csv", "Loan.csv", "Person.csv"};
-        VertexType[] types = {VertexType.Account, VertexType.Loan, VertexType.Person};
-        List<RawVertex> list = new ArrayList<>();
+        final String[] files = {"Account.csv", "Loan.csv", "Person.csv"};
+        final VertexType[] types = {VertexType.Account, VertexType.Loan, VertexType.Person};
+        final List<RawVertex> list = new ArrayList<>();
         int readPOS = 0;
-        for (String file : files) {
+        for (final String file : files) {
             try {
-                List<String> lines = Resources.readLines(Resources.getResource(file), Charset.defaultCharset());
+                final List<String> lines = Resources.readLines(Resources.getResource(file), Charset.defaultCharset());
                 boolean isHeader = true;
-                for (String line : lines) {
+                for (final String line : lines) {
                     if (isHeader) {
                         isHeader = false;
                         continue;
                     }
-                    String[] tokens = line.split(splitBy);
+                    final String[] tokens = line.split(splitBy);
                     long rawID = Long.parseLong(tokens[0]);
                     double loanAmount = file.equals("Loan.csv") ? Double.parseDouble(tokens[1]) : 0;
                     list.add(new RawVertex(types[readPOS], rawID, loanAmount));
@@ -41,17 +41,17 @@ public class DataLoader {
         return list;
     }
 
-    static void updateAccountTransferAccount(List<RawEdge> list) {
+    static void updateAccountTransferAccount(final List<RawEdge> list) {
         try {
-            List<String> lines = Resources.readLines(Resources.getResource("AccountTransferAccount.csv"),
+            final List<String> lines = Resources.readLines(Resources.getResource("AccountTransferAccount.csv"),
                     Charset.defaultCharset());
             boolean isHeader = true;
-            for (String line : lines) {
+            for (final String line : lines) {
                 if (isHeader) {
                     isHeader = false;
                     continue;
                 }
-                String[] tokens = line.split(splitBy);
+                final String[] tokens = line.split(splitBy);
                 long fromID = Long.parseLong(tokens[0]);
                 long toID = Long.parseLong(tokens[1]);
                 double amount = Double.parseDouble(tokens[2]);
@@ -62,17 +62,17 @@ public class DataLoader {
         }
     }
 
-    static void updateLoanDepositAccount(List<RawEdge> list) {
+    static void updateLoanDepositAccount(final List<RawEdge> list) {
         try {
-            List<String> lines = Resources.readLines(Resources.getResource("LoanDepositAccount.csv"),
+            final List<String> lines = Resources.readLines(Resources.getResource("LoanDepositAccount.csv"),
                     Charset.defaultCharset());
             boolean isHeader = true;
-            for (String line : lines) {
+            for (final String line : lines) {
                 if (isHeader) {
                     isHeader = false;
                     continue;
                 }
-                String[] tokens = line.split(splitBy);
+                final String[] tokens = line.split(splitBy);
                 long loanID = Long.parseLong(tokens[0]);
                 long accountID = Long.parseLong(tokens[1]);
                 double amount = Double.parseDouble(tokens[2]);
@@ -83,17 +83,17 @@ public class DataLoader {
         }
     }
 
-    static void updatePersonApplyLoan(List<RawEdge> list) {
+    static void updatePersonApplyLoan(final List<RawEdge> list) {
         try {
-            List<String> lines = Resources.readLines(Resources.getResource("PersonApplyLoan.csv"),
+            final List<String> lines = Resources.readLines(Resources.getResource("PersonApplyLoan.csv"),
                     Charset.defaultCharset());
             boolean isHeader = true;
-            for (String line : lines) {
+            for (final String line : lines) {
                 if (isHeader) {
                     isHeader = false;
                     continue;
                 }
-                String[] tokens = line.split(splitBy);
+                final String[] tokens = line.split(splitBy);
                 long personID = Long.parseLong(tokens[0]);
                 long loanID = Long.parseLong(tokens[1]);
                 list.add(new RawEdge(personID, VertexType.Person, loanID, VertexType.Loan, 0));
@@ -103,17 +103,17 @@ public class DataLoader {
         }
     }
 
-    static void updatePersonGuaranteePerson(List<RawEdge> list) {
+    static void updatePersonGuaranteePerson(final List<RawEdge> list) {
         try {
-            List<String> lines = Resources.readLines(Resources.getResource("PersonGuaranteePerson.csv"),
+            final List<String> lines = Resources.readLines(Resources.getResource("PersonGuaranteePerson.csv"),
                     Charset.defaultCharset());
             boolean isHeader = true;
-            for (String line : lines) {
+            for (final String line : lines) {
                 if (isHeader) {
                     isHeader = false;
                     continue;
                 }
-                String[] tokens = line.split(splitBy);
+                final String[] tokens = line.split(splitBy);
                 long fromID = Long.parseLong(tokens[0]);
                 long toID = Long.parseLong(tokens[1]);
                 list.add(new RawEdge(fromID, VertexType.Person, toID, VertexType.Person, 0));
@@ -123,17 +123,17 @@ public class DataLoader {
         }
     }
 
-    static void updatePersonOwnAccount(List<RawEdge> list) {
+    static void updatePersonOwnAccount(final List<RawEdge> list) {
         try {
-            List<String> lines = Resources.readLines(Resources.getResource("PersonOwnAccount.csv"),
+            final List<String> lines = Resources.readLines(Resources.getResource("PersonOwnAccount.csv"),
                     Charset.defaultCharset());
             boolean isHeader = true;
-            for (String line : lines) {
+            for (final String line : lines) {
                 if (isHeader) {
                     isHeader = false;
                     continue;
                 }
-                String[] tokens = line.split(splitBy);
+                final String[] tokens = line.split(splitBy);
                 long personID = Long.parseLong(tokens[0]);
                 long accountID = Long.parseLong(tokens[1]);
                 list.add(new RawEdge(personID, VertexType.Person, accountID, VertexType.Account, 0));
@@ -144,7 +144,7 @@ public class DataLoader {
     }
 
     public static List<RawEdge> loadEdges() {
-        List<RawEdge> list = new ArrayList<>();
+        final List<RawEdge> list = new ArrayList<>();
         updateAccountTransferAccount(list);
         updateLoanDepositAccount(list);
         updatePersonApplyLoan(list);
