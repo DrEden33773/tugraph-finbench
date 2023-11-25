@@ -19,6 +19,7 @@
             <scope>test</scope>
         </dependency>
 
+	<!--
         <dependency>
             <groupId>com.antgroup.tugraph</groupId>
             <artifactId>geaflow-api</artifactId>
@@ -54,6 +55,14 @@
             <artifactId>geaflow-examples</artifactId>
             <version>0.3.0</version>
         </dependency>
+	-->
+	<dependency>
+	    <groupId>com.antgroup.tugraph</groupId>
+	    <artifactId>geaflow-assembly</artifactId>
+	    <version>0.3.0</version>
+	    <scope>system</scope>
+	    <systemPath>${project.basedir}/dep/geaflow-assembly-0.3.jar</systemPath>
+	</dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
