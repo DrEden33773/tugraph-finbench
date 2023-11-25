@@ -3,6 +3,7 @@ package org.ember.TuGraphFinbench.Record;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.ember.TuGraphFinbench.Algorithms.Case4Message;
+import org.ember.TuGraphFinbench.Cell.Case4Cell;
 
 @Data
 @AllArgsConstructor
@@ -38,5 +39,9 @@ public class Case4Vertex {
             default:
                 return 0;
         }
+    }
+
+    public Case4Cell toCase4Cell() {
+        return new Case4Cell(ID, getHighestLayerLoanAmountSum());
     }
 }

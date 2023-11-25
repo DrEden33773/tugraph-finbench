@@ -24,8 +24,10 @@ import com.antgroup.geaflow.view.GraphViewBuilder;
 import com.antgroup.geaflow.view.IViewDesc;
 import com.antgroup.geaflow.view.graph.GraphViewDesc;
 import org.ember.TuGraphFinbench.Algorithms.Case2Algorithm;
+import org.ember.TuGraphFinbench.Cell.Case2Cell;
 import org.ember.TuGraphFinbench.Env.Env;
 import org.ember.TuGraphFinbench.Record.Case2Vertex;
+import org.ember.TuGraphFinbench.Sink.OrderedFileSink;
 import org.ember.TuGraphFinbench.Source.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,14 +80,14 @@ public class Case2 {
             final PGraphWindow<Long, Case2Vertex, Null> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(vertices,
                     edges, graphViewDesc);
 
-            final SinkFunction<String> sink = new FileSink<>();
+            final SinkFunction<Case2Cell> orderedSink = new OrderedFileSink<>();
 
             graphWindow.compute(new Case2Algorithm(4))
                     .compute(Env.PARALLELISM_MAX)
                     .getVertices()
                     .filter(vertex -> vertex.getValue().getRingCount() > 0)
-                    .map(vertex -> vertex.getValue().getID() + "|" + vertex.getValue().getRingCount())
-                    .sink(sink)
+                    .map(vertex -> vertex.getValue().toCase2Cell())
+                    .sink(orderedSink)
                     .withParallelism(Env.SINK_PARALLELISM_MAX);
         });
 

@@ -23,8 +23,10 @@ import com.antgroup.geaflow.view.GraphViewBuilder;
 import com.antgroup.geaflow.view.IViewDesc.BackendType;
 import com.antgroup.geaflow.view.graph.GraphViewDesc;
 import org.ember.TuGraphFinbench.Algorithms.Case3Algorithm;
+import org.ember.TuGraphFinbench.Cell.Case3Cell;
 import org.ember.TuGraphFinbench.Env.Env;
 import org.ember.TuGraphFinbench.Record.Case3Vertex;
+import org.ember.TuGraphFinbench.Sink.OrderedFileSink;
 import org.ember.TuGraphFinbench.Source.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,14 +79,14 @@ public class Case3 {
             final PGraphWindow<Long, Case3Vertex, Double> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(vertices,
                     edges, graphViewDesc);
 
-            final SinkFunction<String> sink = new FileSink<>();
+            final SinkFunction<Case3Cell> orderedSink = new OrderedFileSink<>();
 
             graphWindow.compute(new Case3Algorithm(2))
                     .compute(Env.PARALLELISM_MAX)
                     .getVertices()
                     .filter(vertex -> vertex.getValue().isHasIn() && vertex.getValue().isHasOut())
-                    .map(vertex -> vertex.getValue().getID() + "|" + String.format("%.2f", vertex.getValue().getInOutRatio()))
-                    .sink(sink)
+                    .map(vertex -> vertex.getValue().toCase3Cell())
+                    .sink(orderedSink)
                     .withParallelism(Env.SINK_PARALLELISM_MAX);
         });
 
