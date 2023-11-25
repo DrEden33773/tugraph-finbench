@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 import java.util.PriorityQueue;
 
 public class OrderedFileSink<OUT extends Comparable<OUT>> extends RichFunction implements SinkFunction<OUT> {
@@ -36,7 +37,7 @@ public class OrderedFileSink<OUT extends Comparable<OUT>> extends RichFunction i
         final String outputDir = runtimeContext.getConfiguration().getString(OUTPUT_DIR);
         String filePath = explicitlyGivenOutputFilename == null
                 ? String.format("%s/result_%s", outputDir, runtimeContext.getTaskArgs().getTaskIndex())
-                : String.format("%s/%s", outputDir, explicitlyGivenOutputFilename);
+                : Paths.get(outputDir, explicitlyGivenOutputFilename).toString();
         LOGGER.info("sink file name {}", filePath);
         boolean append = explicitlyGivenOutputFilename != null || runtimeContext.getConfiguration().getBoolean(new ConfigKey(FILE_OUTPUT_APPEND_ENABLE, true));
         file = new File(filePath);

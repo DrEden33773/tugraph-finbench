@@ -45,7 +45,8 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
                 }
                 while (edges.hasNext()) {
                     final IEdge<Long, Double> edge = edges.next();
-                    this.context.sendMessageToNeighbors(edge.getValue());
+                    this.context.sendMessage(edge.getTargetId(), edge.getValue());
+//                    this.context.sendMessageToNeighbors(edge.getValue());
                     outSum += edge.getValue();
                     currVertex.setOutSum(outSum);
                 }

@@ -60,7 +60,8 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
                 return;
             }
             currVertex.setNthLayer(1);
-            this.context.sendMessageToNeighbors(new ImmutablePair<>(1, currVertex.getLoanAmountSum()));
+            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(1, currVertex.getLoanAmountSum())));
+//            this.context.sendMessageToNeighbors(new ImmutablePair<>(1, currVertex.getLoanAmountSum()));
         }
 
         public void computeIter2(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
@@ -81,7 +82,9 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             }
             currVertex.setLoanAmountSum(loanAmountSum);
             // send: layer0LoanAmountSum(updated)
-            this.context.sendMessageToNeighbors(new ImmutablePair<>(2, loanAmountSum));
+            double finalLoanAmountSum = loanAmountSum;
+            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(2, finalLoanAmountSum)));
+//            this.context.sendMessageToNeighbors(new ImmutablePair<>(2, loanAmountSum));
         }
 
         public void computeIter3(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
@@ -102,7 +105,9 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             }
             currVertex.setLoanAmountSum(loanAmountSum);
             // send: layer0LoanAmountSum(updated)
-            this.context.sendMessageToNeighbors(new ImmutablePair<>(3, loanAmountSum));
+            double finalLoanAmountSum = loanAmountSum;
+            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(3, finalLoanAmountSum)));
+//            this.context.sendMessageToNeighbors(new ImmutablePair<>(3, loanAmountSum));
         }
 
         public void computeIter4(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
@@ -121,7 +126,7 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
                     return; // does not satisfy: ((loan -> account) -> account) -> person
                 }
             }
-            currVertex.setLoanAmountSum(loanAmountSum);
+//            currVertex.setLoanAmountSum(loanAmountSum);
             // unit transfer
             loanAmountSum /= 1e8;
             // #.00 -> deprecated, let `String.format("%.2f", loanAmountSum)` do this instead

@@ -42,7 +42,7 @@ public class DataSource<OUT> extends RichFunction implements SourceFunction<OUT>
         try {
             final List<String> lines = absolutePrefix == null
                     ? Resources.readLines(Resources.getResource(filePath), Charset.defaultCharset())
-                    : Files.readAllLines(Paths.get(absolutePrefix + filePath), Charset.defaultCharset());
+                    : Files.readAllLines(Paths.get(absolutePrefix, filePath), Charset.defaultCharset());
             final List<OUT> result = new ArrayList<>();
             boolean isHeader = true;
             for (final String line : lines) {

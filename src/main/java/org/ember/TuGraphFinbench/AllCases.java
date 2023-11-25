@@ -9,7 +9,7 @@ import org.ember.TuGraphFinbench.Exec.Case4;
 public class AllCases {
 
     public static void main(String[] args) {
-        final String RESULT_FILE_PATH = args.length == 3 ? args[2] : "./target/tmp/data/result/finbench";
+        final String RESULT_FILE_PATH = args.length == 2 ? args[1] : "./target/tmp/data/result/finbench";
         ResultValidator.cleanResult(RESULT_FILE_PATH);
         Case1.main(args);
         Case2.main(args);

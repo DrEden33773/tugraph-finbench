@@ -94,12 +94,12 @@ public class Case2 {
     }
 
     public static void main(String[] args) {
-        if (args.length == 3) {
-            ABSOLUTE_PREFIX = args[1];
-            RESULT_FILE_PATH = args[2];
+        if (args.length == 2) {
+            ABSOLUTE_PREFIX = args[0];
+            RESULT_FILE_PATH = args[1];
         }
         LOGGER.info("*** Start Case2 ***");
-        final Environment environment = EnvironmentUtil.loadEnvironment(args);
+        final Environment environment = EnvironmentUtil.loadEnvironment(new String[]{});
         final IPipelineResult<?> result = submit(environment);
         PipelineResultCollect.get(result);
         environment.shutdown();
