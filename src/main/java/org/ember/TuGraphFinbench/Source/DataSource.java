@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class DataSource<OUT> extends RichFunction implements SourceFunction<OUT>
     protected final FileLineParser<OUT>[] parsers;
     protected List<OUT> records = new ArrayList<>();
     protected Integer readPos = null;
+    protected String absolutePrefix = null;
     protected transient RuntimeContext runtimeContext;
 
     public DataSource(String[] filePaths, FileLineParser<OUT>[] parsers) {
@@ -29,13 +32,19 @@ public class DataSource<OUT> extends RichFunction implements SourceFunction<OUT>
         this.parsers = parsers;
     }
 
+    public DataSource(String[] filePaths, FileLineParser<OUT>[] parsers, String absolutePrefix) {
+        this.filePaths = filePaths;
+        this.parsers = parsers;
+        this.absolutePrefix = absolutePrefix;
+    }
+
     private List<OUT> readFilelines(final String filePath, final FileLineParser<OUT> parser) {
         try {
-            final List<String> lines = Resources.readLines(Resources.getResource(filePath),
-                    Charset.defaultCharset());
+            final List<String> lines = absolutePrefix == null
+                    ? Resources.readLines(Resources.getResource(filePath), Charset.defaultCharset())
+                    : Files.readAllLines(Paths.get(absolutePrefix + filePath), Charset.defaultCharset());
             final List<OUT> result = new ArrayList<>();
             boolean isHeader = true;
-
             for (final String line : lines) {
                 if (isHeader) {
                     isHeader = false;

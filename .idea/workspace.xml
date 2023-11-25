@@ -4,21 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="fixed: Case4Algorithm (has bug before)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Cell/Case1Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Cell/Case2Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Cell/Case3Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Cell/Case4Cell.java" afterDir="false" />
+    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="successfully regulate the official format (header + id_ascending)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Discovery/GoogleResourcesLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Discovery/InputArgs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/AllCases.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/AllCases.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case1Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case2Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case2Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case3Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case3Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/Case4Vertex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Sink/OrderedFileSink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Sink/OrderedFileSink.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Source/DataSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Source/DataSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Util/IntoTrait.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -187,32 +184,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Case2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case2" />
-      <module name="tugraph-finbench" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ember.TuGraphFinbench.Exec.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Case3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case3" />
-      <module name="tugraph-finbench" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ember.TuGraphFinbench.Exec.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Case4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case4" />
       <module name="tugraph-finbench" />
@@ -226,12 +197,39 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GoogleResourcesLoader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Discovery.GoogleResourcesLoader" />
+      <module name="tugraph-finbench" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ember.TuGraphFinbench.Discovery.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InputArgs" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Discovery.InputArgs" />
+      <module name="tugraph-finbench" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ember.TuGraphFinbench.Discovery.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.AllCases" />
+        <item itemvalue="Application.GoogleResourcesLoader" />
+        <item itemvalue="Application.InputArgs" />
         <item itemvalue="Application.Case4" />
         <item itemvalue="Application.Case1" />
-        <item itemvalue="Application.Case2" />
       </list>
     </recent_temporary>
   </component>
@@ -256,7 +254,8 @@
       <workItem from="1700818886672" duration="15707000" />
       <workItem from="1700849994653" duration="10822000" />
       <workItem from="1700892348157" duration="4201000" />
-      <workItem from="1700897110438" duration="2037000" />
+      <workItem from="1700897110438" duration="2466000" />
+      <workItem from="1700904219587" duration="8793000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -370,7 +369,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700896629225</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="successfully regulate the official format (header + id_ascending)">
+      <option name="closed" value="true" />
+      <created>1700899389924</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1700899389924</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +398,8 @@
     <MESSAGE value="finished all cases, now it's time to adjust the format and keep the ID ascendant." />
     <MESSAGE value="normal push" />
     <MESSAGE value="fixed: Case4Algorithm (has bug before)" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed: Case4Algorithm (has bug before)" />
+    <MESSAGE value="successfully regulate the official format (header + id_ascending)" />
+    <option name="LAST_COMMIT_MESSAGE" value="successfully regulate the official format (header + id_ascending)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

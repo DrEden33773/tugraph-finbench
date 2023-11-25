@@ -21,17 +21,24 @@ public class OrderedFileSink<OUT extends Comparable<OUT>> extends RichFunction i
     public static final String header = "id|value";
     static final Logger LOGGER = LoggerFactory.getLogger(OrderedFileSink.class);
     File file;
-    PriorityQueue<OUT> queue = new PriorityQueue<OUT>();
+    String explicitlyGivenOutputFilename = null;
+    PriorityQueue<OUT> queue = new PriorityQueue<>();
 
     public OrderedFileSink() {
     }
 
+    public OrderedFileSink(final String explicitlyGivenOutputFilename) {
+        this.explicitlyGivenOutputFilename = explicitlyGivenOutputFilename;
+    }
+
     @Override
     public void open(RuntimeContext runtimeContext) {
-        String filePath = String.format("%s/result_%s",
-                runtimeContext.getConfiguration().getString(OUTPUT_DIR), runtimeContext.getTaskArgs().getTaskIndex());
+        final String outputDir = runtimeContext.getConfiguration().getString(OUTPUT_DIR);
+        String filePath = explicitlyGivenOutputFilename == null
+                ? String.format("%s/result_%s", outputDir, runtimeContext.getTaskArgs().getTaskIndex())
+                : String.format("%s/%s", outputDir, explicitlyGivenOutputFilename);
         LOGGER.info("sink file name {}", filePath);
-        boolean append = runtimeContext.getConfiguration().getBoolean(new ConfigKey(FILE_OUTPUT_APPEND_ENABLE, true));
+        boolean append = explicitlyGivenOutputFilename != null || runtimeContext.getConfiguration().getBoolean(new ConfigKey(FILE_OUTPUT_APPEND_ENABLE, true));
         file = new File(filePath);
         try {
             if (!append && file.exists()) {

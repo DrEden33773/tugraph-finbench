@@ -10,7 +10,6 @@ import com.antgroup.geaflow.example.function.FileSink;
 import com.antgroup.geaflow.example.function.FileSource.FileLineParser;
 import com.antgroup.geaflow.example.util.EnvironmentUtil;
 import com.antgroup.geaflow.example.util.PipelineResultCollect;
-import com.antgroup.geaflow.example.util.ResultValidator;
 import com.antgroup.geaflow.model.common.Null;
 import com.antgroup.geaflow.model.graph.edge.IEdge;
 import com.antgroup.geaflow.model.graph.edge.impl.ValueEdge;
@@ -38,7 +37,6 @@ import java.util.Collections;
 public class Case2 {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(Case2.class);
-    public static final String RESULT_FILE_PATH = "./target/tmp/data/result/finbench/case2";
     public static final String[] vertexFilePaths = {"Account.csv"};
     public static final String[] edgeFilePaths = {"AccountTransferAccount.csv"};
     public static final FileLineParser<IVertex<Long, Case2Vertex>>[] vertexParsers = new FileLineParser[]{(final String line) -> {
@@ -55,20 +53,21 @@ public class Case2 {
         final IEdge<Long, Null> edge = new ValueEdge<>(srcID, dstID, new Null());
         return Collections.singletonList(edge);
     }};
+    public static String RESULT_FILE_PATH = "./target/tmp/data/result/finbench";
+    public static String ABSOLUTE_PREFIX = null;
 
     private static IPipelineResult<?> submit(Environment environment) {
         final Pipeline pipeline = PipelineFactory.buildPipeline(environment);
         final Configuration envConfig = environment.getEnvironmentContext().getConfig();
         envConfig.put(FileSink.OUTPUT_DIR, RESULT_FILE_PATH);
-        ResultValidator.cleanResult(RESULT_FILE_PATH);
 
         pipeline.submit((PipelineTask) pipelineTaskCtx -> {
             final PWindowSource<IVertex<Long, Case2Vertex>> vertices = pipelineTaskCtx.buildSource(
-                    new DataSource<>(vertexFilePaths, vertexParsers), AllWindow.getInstance()
+                    new DataSource<>(vertexFilePaths, vertexParsers, ABSOLUTE_PREFIX), AllWindow.getInstance()
             ).withParallelism(Env.PARALLELISM_MAX);
 
             final PWindowSource<IEdge<Long, Null>> edges = pipelineTaskCtx.buildSource(
-                    new DataSource<>(edgeFilePaths, edgeParsers), AllWindow.getInstance()
+                    new DataSource<>(edgeFilePaths, edgeParsers, ABSOLUTE_PREFIX), AllWindow.getInstance()
             ).withParallelism(Env.PARALLELISM_MAX);
 
             final GraphViewDesc graphViewDesc = GraphViewBuilder
@@ -80,7 +79,7 @@ public class Case2 {
             final PGraphWindow<Long, Case2Vertex, Null> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(vertices,
                     edges, graphViewDesc);
 
-            final SinkFunction<Case2Cell> orderedSink = new OrderedFileSink<>();
+            final SinkFunction<Case2Cell> orderedSink = new OrderedFileSink<>("result2.csv");
 
             graphWindow.compute(new Case2Algorithm(4))
                     .compute(Env.PARALLELISM_MAX)
@@ -95,6 +94,10 @@ public class Case2 {
     }
 
     public static void main(String[] args) {
+        if (args.length == 3) {
+            ABSOLUTE_PREFIX = args[1];
+            RESULT_FILE_PATH = args[2];
+        }
         LOGGER.info("*** Start Case2 ***");
         final Environment environment = EnvironmentUtil.loadEnvironment(args);
         final IPipelineResult<?> result = submit(environment);
