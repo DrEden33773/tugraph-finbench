@@ -3,3 +3,5 @@ data/
 dep/
 src/main/resources
 dev-env/
+.vscode
+.idea
