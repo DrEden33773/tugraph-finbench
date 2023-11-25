@@ -8,11 +8,15 @@ import com.antgroup.geaflow.model.common.Null;
 import org.ember.TuGraphFinbench.Record.Case4Vertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
 
-import java.text.DecimalFormat;
 import java.util.Iterator;
 
 
 public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null, Case4Message> {
+
+    public Case4Algorithm() {
+        super(5);
+    }
+
     public Case4Algorithm(long iterations) {
         super(iterations);
         assert iterations == 5;
@@ -84,7 +88,8 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
             if (messageIterator.hasNext()) {
                 // has in edge, self highest layer <- 1
                 currV.setHighestLayer(1);
-                // update: self loan amount sum (layer1 <- layer0)
+                // update: self loan amount sum
+                // (layer1 <- layer0)
                 double currVLayer1LoanAmountSum = currV.getLayer1LoanAmountSum();
                 while (messageIterator.hasNext()) {
                     currVLayer1LoanAmountSum += messageIterator.next().layer0LoanAmountSum;
@@ -101,7 +106,8 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
                 return;
             }
             // update: self loan amount sum
-            // (layer2 <- layer1) and (layer1 <- layer0)
+            // (layer2 <- (layer1 <- layer0))
+            // (layer1 <- layer0)
             while (messageIterator.hasNext()) {
                 final Case4Message message = messageIterator.next();
                 switch (message.highestLayer) {
@@ -112,7 +118,10 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
                     case 1:
                         currV.setHighestLayer(2);
                         currV.setLayer2LoanAmountSum(currV.getLayer2LoanAmountSum()
-                                + message.layer1LoanAmountSum);
+                                        + currV.getLayer1LoanAmountSum() // currV.layer1.sum
+                                        + message.layer1LoanAmountSum // msg.layer1.sum
+                                // currV.layer1 + msg.layer1 -> 1 + 1 = 2 -> currV.highest.layer
+                        );
                         break;
                     default:
                         break;
@@ -128,8 +137,9 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
                 return;
             }
             // update: self loan amount sum
-            // (layer3 <- layer2) and (layer2 <- layer1) and (layer1 <- layer0)
-
+            // (layer3 <- (layer2 <- (layer1 <- layer0)))
+            // (layer2 <- (layer1 <- layer0))
+            // (layer1 <- layer0)
             while (messageIterator.hasNext()) {
                 final Case4Message message = messageIterator.next();
                 switch (message.highestLayer) {
@@ -140,11 +150,17 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
                     case 1:
                         currV.setHighestLayer(2);
                         currV.setLayer2LoanAmountSum(currV.getLayer2LoanAmountSum()
-                                + message.layer1LoanAmountSum);
+                                        + currV.getLayer1LoanAmountSum() // currV.layer1.sum
+                                        + message.layer1LoanAmountSum // msg.layer1.sum
+                                // currV.layer1 + msg.layer1 -> 1 + 1 = 2 -> currV.highest.layer
+                        );
                     case 2:
                         currV.setHighestLayer(3);
                         currV.setLayer3LoanAmountSum(currV.getLayer3LoanAmountSum()
-                                + message.layer2LoanAmountSum);
+                                        + currV.getLayer1LoanAmountSum() // currV.layer1.sum
+                                        + message.layer2LoanAmountSum // msg.layer2.sum
+                                // currV.layer1 + msg.layer2 -> 1 + 2 = 3 -> currV.highest.layer
+                        );
                         break;
                     default:
                         break;
@@ -157,11 +173,14 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
             currVLayer1LoanAmountSum /= 1e8;
             currVLayer2LoanAmountSum /= 1e8;
             currVLayer3LoanAmountSum /= 1e8;
-            // round half up
-            final DecimalFormat dFormat = new DecimalFormat("#.00");
-            currV.setLayer1LoanAmountSum(Double.parseDouble(dFormat.format(currVLayer1LoanAmountSum)));
-            currV.setLayer2LoanAmountSum(Double.parseDouble(dFormat.format(currVLayer2LoanAmountSum)));
-            currV.setLayer3LoanAmountSum(Double.parseDouble(dFormat.format(currVLayer3LoanAmountSum)));
+            // round half up -> deprecated, use `String.format("%.2f", res)` instead
+            // final DecimalFormat dFormat = new DecimalFormat("#.00");
+            // currVLayer1LoanAmountSum = Double.parseDouble(dFormat.format(currVLayer1LoanAmountSum)));
+            // currVLayer2LoanAmountSum = Double.parseDouble(dFormat.format(currVLayer2LoanAmountSum)));
+            // currVLayer3LoanAmountSum = Double.parseDouble(dFormat.format(currVLayer3LoanAmountSum)));
+            currV.setLayer1LoanAmountSum(currVLayer1LoanAmountSum);
+            currV.setLayer2LoanAmountSum(currVLayer2LoanAmountSum);
+            currV.setLayer3LoanAmountSum(currVLayer3LoanAmountSum);
         }
     }
 }

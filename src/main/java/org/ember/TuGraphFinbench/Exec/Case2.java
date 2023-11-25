@@ -27,12 +27,15 @@ import org.ember.TuGraphFinbench.Algorithms.Case2Algorithm;
 import org.ember.TuGraphFinbench.Env.Env;
 import org.ember.TuGraphFinbench.Record.Case2Vertex;
 import org.ember.TuGraphFinbench.Source.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Case2 {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(Case2.class);
     public static final String RESULT_FILE_PATH = "./target/tmp/data/result/finbench/case2";
     public static final String[] vertexFilePaths = {"Account.csv"};
     public static final String[] edgeFilePaths = {"AccountTransferAccount.csv"};
@@ -90,9 +93,11 @@ public class Case2 {
     }
 
     public static void main(String[] args) {
+        LOGGER.info("*** Start Case2 ***");
         final Environment environment = EnvironmentUtil.loadEnvironment(args);
         final IPipelineResult<?> result = submit(environment);
         PipelineResultCollect.get(result);
         environment.shutdown();
+        LOGGER.info("*** End Case2 ***");
     }
 }

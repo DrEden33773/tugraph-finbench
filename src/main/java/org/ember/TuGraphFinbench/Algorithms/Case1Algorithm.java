@@ -9,10 +9,13 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.ember.TuGraphFinbench.Record.Case1Vertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
 
-import java.text.DecimalFormat;
 import java.util.Iterator;
 
 public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null, ImmutablePair<Integer, Double>> {
+
+    public Case1Algorithm() {
+        super(4);
+    }
 
     public Case1Algorithm(long iterations) {
         super(iterations);
@@ -121,9 +124,9 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             currVertex.setLoanAmountSum(loanAmountSum);
             // unit transfer
             loanAmountSum /= 1e8;
-            // #.00
-            final DecimalFormat dFormat = new DecimalFormat("#.00");
-            loanAmountSum = Double.parseDouble(dFormat.format(loanAmountSum));
+            // #.00 -> deprecated, let `String.format("%.2f", loanAmountSum)` do this instead
+            // final DecimalFormat dFormat = new DecimalFormat("#.00");
+            // loanAmountSum = Double.parseDouble(dFormat.format(loanAmountSum));
             // update: layer0LoanAmountSum
             currVertex.setLoanAmountSum(loanAmountSum);
         }

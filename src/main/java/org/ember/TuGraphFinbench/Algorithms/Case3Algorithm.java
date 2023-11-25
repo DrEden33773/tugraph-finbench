@@ -7,11 +7,13 @@ import com.antgroup.geaflow.example.function.AbstractVcFunc;
 import com.antgroup.geaflow.model.graph.edge.IEdge;
 import org.ember.TuGraphFinbench.Record.Case3Vertex;
 
-import java.text.DecimalFormat;
 import java.util.Iterator;
 
 public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Double, Double> {
 
+    public Case3Algorithm() {
+        super(2);
+    }
 
     public Case3Algorithm(long iterations) {
         super(iterations);
@@ -62,8 +64,10 @@ public class Case3Algorithm extends VertexCentricCompute<Long, Case3Vertex, Doub
             }
 
             double res = inSum / outSum;
-            final DecimalFormat dFormat = new DecimalFormat("#.00");
-            res = Double.parseDouble(dFormat.format(res));
+
+            // deprecated -> use String.format("%.2f", res) instead
+            // final DecimalFormat dFormat = new DecimalFormat("#.00");
+            // res = Double.parseDouble(dFormat.format(res));
 
             currVertex.setInOutRatio(res);
         }

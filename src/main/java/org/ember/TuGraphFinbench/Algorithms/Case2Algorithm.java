@@ -13,6 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null, List<MutablePair<Long, Long>>> {
+
+    public Case2Algorithm() {
+        super(4);
+    }
+
     public Case2Algorithm(long iterations) {
         super(iterations);
         assert iterations == 4;

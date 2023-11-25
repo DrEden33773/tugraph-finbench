@@ -26,11 +26,14 @@ import org.ember.TuGraphFinbench.Algorithms.Case3Algorithm;
 import org.ember.TuGraphFinbench.Env.Env;
 import org.ember.TuGraphFinbench.Record.Case3Vertex;
 import org.ember.TuGraphFinbench.Source.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
 public class Case3 {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(Case3.class);
     public static final String RESULT_FILE_PATH = "./target/tmp/data/result/finbench/case3";
     public static final String[] vertexFilePaths = {"Account.csv"};
     public static final String[] edgeFilePaths = {"AccountTransferAccount.csv"};
@@ -80,7 +83,7 @@ public class Case3 {
                     .compute(Env.PARALLELISM_MAX)
                     .getVertices()
                     .filter(vertex -> vertex.getValue().isHasIn() && vertex.getValue().isHasOut())
-                    .map(vertex -> vertex.getValue().getID() + "|" + vertex.getValue().getInOutRatio())
+                    .map(vertex -> vertex.getValue().getID() + "|" + String.format("%.2f", vertex.getValue().getInOutRatio()))
                     .sink(sink)
                     .withParallelism(Env.SINK_PARALLELISM_MAX);
         });
@@ -89,9 +92,11 @@ public class Case3 {
     }
 
     public static void main(String[] args) {
+        LOGGER.info("*** Start Case3 ***");
         final Environment environment = EnvironmentUtil.loadEnvironment(args);
         final IPipelineResult<?> result = submit(environment);
         PipelineResultCollect.get(result);
         environment.shutdown();
+        LOGGER.info("*** End Case3 ***");
     }
 }
