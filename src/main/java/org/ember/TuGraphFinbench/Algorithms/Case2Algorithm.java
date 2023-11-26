@@ -5,14 +5,16 @@ import com.antgroup.geaflow.api.graph.function.vc.VertexCentricCombineFunction;
 import com.antgroup.geaflow.api.graph.function.vc.VertexCentricComputeFunction;
 import com.antgroup.geaflow.example.function.AbstractVcFunc;
 import com.antgroup.geaflow.model.common.Null;
-import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.ember.TuGraphFinbench.Record.Case2Vertex;
+import it.unimi.dsi.fastutil.longs.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Arrays;
 
-public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null, List<MutablePair<Long, Long>>> {
+public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Boolean, ImmutableTriple<Long, long[], long[]>> {
 
     public Case2Algorithm() {
         super(4);
@@ -20,34 +22,30 @@ public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null
 
     public Case2Algorithm(long iterations) {
         super(iterations);
-        assert iterations == 4;
+        assert iterations == 2;
     }
 
     @Override
-    public VertexCentricCombineFunction<List<MutablePair<Long, Long>>> getCombineFunction() {
+    public VertexCentricCombineFunction< ImmutableTriple<Long, long[], long[]> > getCombineFunction() {
         return null;
     }
 
     @Override
-    public VertexCentricComputeFunction<Long, Case2Vertex, Null, List<MutablePair<Long, Long>>> getComputeFunction() {
+    public VertexCentricComputeFunction< Long, Case2Vertex, Boolean, ImmutableTriple<Long, long[], long[]> > getComputeFunction() {
         return new Case2ComputeFunction();
     }
 
-    public static class Case2ComputeFunction extends AbstractVcFunc<Long, Case2Vertex, Null, List<MutablePair<Long, Long>>> {
+    public static class Case2ComputeFunction extends AbstractVcFunc<Long, Case2Vertex, Boolean, ImmutableTriple<Long, long[], long[]> > {
         @Override
-        public void compute(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
+        public void compute(final Long vertexId, final Iterator< ImmutableTriple<Long, long[], long[]> > messageIterator) {
             switch ((int) this.context.getIterationId()) {
                 case 1:
+                    // 每个节点将自己的出边邻接表发送给自己所有的入边邻居
                     computeIter1(vertexId);
                     break;
                 case 2:
+                    // 每个节点根据接收到的入边邻居的邻接表，利用集合交集计算（入边邻居的出边邻接表 交 自己的入边邻接表），完成三角形计数（需考虑边的重数信息）
                     computeIter2(vertexId, messageIterator);
-                    break;
-                case 3:
-                    computeIter3(vertexId, messageIterator);
-                    break;
-                case 4:
-                    computeIter4(vertexId, messageIterator);
                     break;
                 default:
                     throw new RuntimeException("Invalid iteration id: " + this.context.getIterationId());
@@ -55,38 +53,84 @@ public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null
         }
 
         void computeIter1(final Long vertexId) {
-            List<MutablePair<Long, Long>> toSend = new ArrayList<>(1);
-            toSend.add(new MutablePair<>(vertexId, vertexId));
-            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), toSend));
-        }
-
-        void computeIter2(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
-            Case2Vertex currentVertex = this.context.vertex().get().getValue();
-            // update currentVertex's prevAncestors
-            messageIterator.forEachRemaining(currentVertex.getPrevAncestors()::addAll);
-            // wrap prevAncestors to send (prevID := currVertexID, ancestorID := currVertex.foreach.ancestorID)
-            List<MutablePair<Long, Long>> toSend = new ArrayList<>(currentVertex.getPrevAncestors().size());
-            currentVertex.getPrevAncestors().forEach(prevAncestorPair -> {
-                MutablePair<Long, Long> toAdd = new MutablePair<>(vertexId, prevAncestorPair.getRight());
-                toSend.add(toAdd);
-            });
-            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), toSend));
-        }
-
-        void computeIter3(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
-            // same as iter2
-            computeIter2(vertexId, messageIterator);
-        }
-
-        void computeIter4(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
-            Case2Vertex currentVertex = this.context.vertex().get().getValue();
-            // iterate over currentVertex's prevAncestors
-            // if prevAncestor's ancestorID == currentVertexID, then ringCount++
-            messageIterator.forEachRemaining(message -> message.forEach(prevAncestorPair -> {
-                if (prevAncestorPair.getRight().equals(vertexId)) {
-                    currentVertex.setRingCount(currentVertex.getRingCount() + 1);
+            // 生成带有重数的出边邻接表
+            Long2LongOpenHashMap rawAdjList = new Long2LongOpenHashMap();
+            this.context.edges().getOutEdges().forEach(edge -> {
+                if ((edge.getTargetId() != edge.getSrcId()) && (edge.getValue())) {
+                    rawAdjList.addTo(edge.getTargetId(), 1);
+                    //System.out.println("---> Iter 1: out edge: " + vertexId + " -> " + edge.getTargetId());
                 }
-            }));
+            });
+            long[] neighborVids = rawAdjList.keySet().toLongArray();
+            Arrays.sort(neighborVids);
+            long[] numEdges = new long[neighborVids.length];
+            for(int i = 0; i < neighborVids.length; i++)
+                numEdges[i] = rawAdjList.get(neighborVids[i]);
+            // 生成不重复的入边邻接表
+            Long2LongOpenHashMap inNeighborSet = new Long2LongOpenHashMap();
+            this.context.edges().getOutEdges().forEach(edge -> {
+                if (edge.getTargetId() != edge.getSrcId() && !edge.getValue()) {
+                    inNeighborSet.addTo(edge.getTargetId(), 1);
+                    //System.out.println("---> Iter 1: in edge: " + edge.getTargetId() + " -> " + vertexId);
+                }
+            });
+            // 向所有入边邻居发送出边邻接表
+            ImmutableTriple<Long, long[] ,long[]> msg = new ImmutableTriple<Long, long[], long[]>(vertexId, neighborVids, numEdges);
+            for(long inSrcId: inNeighborSet.keySet()) {
+                this.context.sendMessage(inSrcId, msg);
+            }
+            //System.out.println("----> Iter1: vertex " + vertexId + ", in neighbor: " + inNeighborSet.size());
+            //this.context.edges().getInEdges().forEach(edge -> this.context.sendMessage(edge.getSrcId(), msg));
         }
+
+        void computeIter2(final Long vertexId, final Iterator< ImmutableTriple<Long, long[], long[]> > messageIterator) {
+            Case2Vertex currentVertex = this.context.vertex().get().getValue();
+            // 生成当前节点的带有重数的入边邻接表
+            Long2LongOpenHashMap localInAdjList = new Long2LongOpenHashMap();
+            this.context.edges().getOutEdges().forEach(edge -> {
+                if (edge.getTargetId() != edge.getSrcId() && !edge.getValue()) // 忽略自环
+                    localInAdjList.addTo(edge.getTargetId(), 1);
+            });
+            //System.out.println("---> Iter 2 vetex " + vertexId + ", local in adj len " + localInAdjList.size());
+            // 生成当前节点的带有重数的出边邻接表
+            Long2LongOpenHashMap localOutAdjList = new Long2LongOpenHashMap();
+            this.context.edges().getOutEdges().forEach(edge -> {
+                if (edge.getTargetId() != edge.getSrcId() && edge.getValue()) { // 忽略自环
+                    localOutAdjList.addTo(edge.getTargetId(), 1);
+                }
+            });
+            //System.out.println("---> Iter 2 vetex " + vertexId + ", local out adj len " + localOutAdjList.size());
+            long totalCount = 0;
+            // 接收来自出边邻居的出边邻接表
+            while (messageIterator.hasNext()) {
+                final ImmutableTriple<Long, long[],long[]> neighborMsg = messageIterator.next();
+                long neighborVid = neighborMsg.getLeft();
+                // 构造对应的OpenHashMap
+                Long2LongOpenHashMap neighborOutAdjList = new Long2LongOpenHashMap();
+                for(int i = 0; i < neighborMsg.getMiddle().length; i++) {
+                    long vid = neighborMsg.getMiddle()[i];
+                    long numEdge = neighborMsg.getRight()[i];
+                    neighborOutAdjList.put(vid, numEdge);
+                }
+                //System.out.println("---> Iter 2 vetex " + vertexId + ", neighborVid " + neighborVid + ", out adj len " + neighborOutAdjList.size());
+                for(long candidateVid: neighborOutAdjList.keySet()) {
+                    //System.out.println("---> Iter 2 vetex " + vertexId + ", candidateVid " + candidateVid + ", local in adj[0] " + localInAdjList.);
+                    if (localInAdjList.containsKey(candidateVid)) {
+                        // 发现三角形回路 vertexId -[e1]-> neighborVid -[e2]-> candidateVid, vertexId <-[e3]- candidateVid
+                        long ne1 = localOutAdjList.get(neighborVid);
+                        long ne2 = neighborOutAdjList.get(candidateVid);
+                        long ne3 = localInAdjList.get(candidateVid);
+                        assert ne1 >= 1;
+                        assert ne2 >= 1;
+                        assert ne3 >= 1;
+                        long count = ne1 * ne2 * ne3;
+                        totalCount += count;
+                    }
+                }
+            }
+            //System.out.println("---> Iter 2 vetex " + vertexId + ", totalCount " + totalCount);
+            currentVertex.setRingCount(totalCount);
+        }
+
     }
 }

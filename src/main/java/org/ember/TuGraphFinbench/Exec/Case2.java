@@ -36,22 +36,28 @@ import java.util.Collections;
 
 public class Case2 {
 
+    public static final Null nullEdgeProperty = new Null();
+
     public static final Logger LOGGER = LoggerFactory.getLogger(Case2.class);
     public static final String[] vertexFilePaths = {"Account.csv"};
     public static final String[] edgeFilePaths = {"AccountTransferAccount.csv"};
     public static final FileLineParser<IVertex<Long, Case2Vertex>>[] vertexParsers = new FileLineParser[]{(final String line) -> {
         final String[] fields = line.split("\\|");
         final long accountID = Long.parseLong(fields[0]);
-        final Case2Vertex case2Vertex = new Case2Vertex(accountID, 0, new ArrayList<>());
+        final Case2Vertex case2Vertex = new Case2Vertex(accountID, 0);
         final IVertex<Long, Case2Vertex> vertex = new ValueVertex<>(accountID, case2Vertex);
         return Collections.singletonList(vertex);
     }};
-    public static final FileLineParser<IEdge<Long, Null>>[] edgeParsers = new FileLineParser[]{(final String line) -> {
+    public static final FileLineParser<IEdge<Long, Boolean>>[] edgeParsers = new FileLineParser[]{(final String line) -> {
         final String[] fields = line.split("\\|");
         final long srcID = Long.parseLong(fields[0]);
         final long dstID = Long.parseLong(fields[1]);
-        final IEdge<Long, Null> edge = new ValueEdge<>(srcID, dstID, new Null());
-        return Collections.singletonList(edge);
+        final IEdge<Long, Boolean> edge1 = new ValueEdge<>(srcID, dstID, true);
+        final IEdge<Long, Boolean> edge2 = new ValueEdge<>(dstID, srcID, false);
+        final ArrayList<IEdge<Long, Boolean> > edges = new ArrayList<>();
+        edges.add(edge1);
+        edges.add(edge2);
+        return edges;
     }};
     public static String RESULT_FILE_PATH = "./target/tmp/data/result/finbench";
     public static String ABSOLUTE_PREFIX = null;
@@ -66,7 +72,7 @@ public class Case2 {
                     new DataSource<>(vertexFilePaths, vertexParsers, ABSOLUTE_PREFIX), AllWindow.getInstance()
             ).withParallelism(Env.PARALLELISM_MAX);
 
-            final PWindowSource<IEdge<Long, Null>> edges = pipelineTaskCtx.buildSource(
+            final PWindowSource<IEdge<Long, Boolean>> edges = pipelineTaskCtx.buildSource(
                     new DataSource<>(edgeFilePaths, edgeParsers, ABSOLUTE_PREFIX), AllWindow.getInstance()
             ).withParallelism(Env.PARALLELISM_MAX);
 
@@ -76,12 +82,12 @@ public class Case2 {
                     .withBackend(IViewDesc.BackendType.Memory)
                     .build();
 
-            final PGraphWindow<Long, Case2Vertex, Null> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(vertices,
+            final PGraphWindow<Long, Case2Vertex, Boolean> graphWindow = pipelineTaskCtx.buildWindowStreamGraph(vertices,
                     edges, graphViewDesc);
 
             final SinkFunction<Case2Cell> orderedSink = new OrderedFileSink<>("result2.csv");
 
-            graphWindow.compute(new Case2Algorithm(4))
+            graphWindow.compute(new Case2Algorithm(2))
                     .compute(Env.PARALLELISM_MAX)
                     .getVertices()
                     .filter(vertex -> vertex.getValue().getRingCount() > 0)
