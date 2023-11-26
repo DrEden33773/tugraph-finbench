@@ -80,7 +80,7 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
             }
             //System.out.println("-----> Iter2: vertex " + currVertex.getID() + " get " + loanAmountMap.size() + " loans.");
             this.context.edges().getOutEdges().forEach(edge -> {
-              if ((edge.getTargetId() & 3) == 2) {
+              if (((edge.getTargetId() & 3) == 2) && (edge.getTargetId() != edge.getSrcId())) {
                 // the target is an account vertex
                 // send the received loans to its outgoing account neighbors
                 for(Map.Entry<Long, Double> entry: loanAmountMap.entrySet()) {
