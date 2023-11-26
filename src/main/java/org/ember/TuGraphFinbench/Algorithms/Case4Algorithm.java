@@ -26,7 +26,7 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
 
     @Override
     public VertexCentricComputeFunction<Long, Case4Vertex, Null, Case4Message> getComputeFunction() {
-        return new Case1ComputeFunction();
+        return new Case4ComputeFunction();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
         return null;
     }
 
-    public static class Case1ComputeFunction extends AbstractVcFunc<Long, Case4Vertex, Null, Case4Message> {
+    public static class Case4ComputeFunction extends AbstractVcFunc<Long, Case4Vertex, Null, Case4Message> {
         @Override
         public void compute(final Long currVertexGId, final Iterator<Case4Message> messageIterator) {
             switch ((int) this.context.getIterationId()) {
