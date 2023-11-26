@@ -12,43 +12,35 @@ import java.util.Map;
 public class Case4Vertex {
     VertexType vertexType;
     long ID;
-    double layer0LoanAmountSum;
-    double layer1LoanAmountSum;
-    double layer2LoanAmountSum;
-    double layer3LoanAmountSum;
     int highestLayer;
-    Map<Long, Double> layer0LoanAmountMap;
-    Map<Long, Double> layer1LoanAmountMap;
-    Map<Long, Double> layer2LoanAmountMap;
-    Map<Long, Double> layer3LoanAmountMap;
+    Map<Long, Double> ahead0LayerLoanAmountMap;
+    Map<Long, Double> ahead1LayerLoanAmountMap;
+    Map<Long, Double> ahead2LayerLoanAmountMap;
+    Map<Long, Double> ahead3LayerLoanAmountMap;
 
     public Case4Message toCase4Message() {
         return new Case4Message(
-                layer0LoanAmountSum,
-                layer1LoanAmountSum,
-                layer2LoanAmountSum,
-                layer3LoanAmountSum,
                 highestLayer,
-                layer0LoanAmountMap,
-                layer1LoanAmountMap,
-                layer2LoanAmountMap,
-                layer3LoanAmountMap
+                ahead0LayerLoanAmountMap,
+                ahead1LayerLoanAmountMap,
+                ahead2LayerLoanAmountMap,
+                ahead3LayerLoanAmountMap
         );
     }
 
     public double getHighestLayerLoanAmountSum() {
-        switch (highestLayer) {
-            case 0:
-                return layer0LoanAmountSum;
-            case 1:
-                return layer1LoanAmountSum;
-            case 2:
-                return layer2LoanAmountSum;
-            case 3:
-                return layer3LoanAmountSum;
-            default:
-                return 0;
+        double res = 0.0;
+        if (highestLayer >= 1) {
+            res += ahead1LayerLoanAmountMap.values().stream().mapToDouble(Double::doubleValue).sum();
         }
+        if (highestLayer >= 2) {
+            res += ahead2LayerLoanAmountMap.values().stream().mapToDouble(Double::doubleValue).sum();
+        }
+        if (highestLayer == 3) {
+            res += ahead3LayerLoanAmountMap.values().stream().mapToDouble(Double::doubleValue).sum();
+        }
+        res /= 1e8;
+        return res;
     }
 
     public Case4Cell toCase4Cell() {
