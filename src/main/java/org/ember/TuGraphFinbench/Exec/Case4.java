@@ -34,6 +34,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
+import static org.ember.TuGraphFinbench.Util.globalID;
+
 public class Case4 {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(Case4.class);
@@ -44,7 +46,9 @@ public class Case4 {
                 final String[] fields = line.split("\\|");
                 final long personID = Long.parseLong(fields[0]);
                 final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Person, personID, 0, 0, 0, 0, 0);
-                final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(personID, case4Vertex);
+                // use `gID ~ globalID` as the index
+                final long gID = globalID(VertexType.Person, personID);
+                final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(gID, case4Vertex);
                 return Collections.singletonList(vertex);
             }, // Person.csv
             (final String line) -> {
@@ -52,7 +56,9 @@ public class Case4 {
                 final long loanID = Long.parseLong(fields[0]);
                 final double loanAmount = Double.parseDouble(fields[1]);
                 final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Loan, loanID, loanAmount, 0, 0, 0, 0);
-                final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(loanID, case4Vertex);
+                // use `gID ~ globalID` as the index
+                final long gID = globalID(VertexType.Loan, loanID);
+                final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(gID, case4Vertex);
                 return Collections.singletonList(vertex);
             }, // Loan.csv
     };
@@ -61,16 +67,22 @@ public class Case4 {
                 final String[] fields = line.split("\\|");
                 final long fromPersonID = Long.parseLong(fields[0]);
                 final long toPersonID = Long.parseLong(fields[1]);
+                // use `gID ~ globalID` as the index
+                final long gid_from = globalID(VertexType.Person, fromPersonID);
+                final long gid_to = globalID(VertexType.Person, toPersonID);
                 // invert the edge direction while loading
-                final IEdge<Long, Null> edge = new ValueEdge<>(toPersonID, fromPersonID, new Null());
+                final IEdge<Long, Null> edge = new ValueEdge<>(gid_to, gid_from, new Null());
                 return Collections.singletonList(edge);
             }, // PersonGuaranteePerson.csv
             (final String line) -> {
                 final String[] fields = line.split("\\|");
                 final long fromPersonID = Long.parseLong(fields[0]);
                 final long toLoanID = Long.parseLong(fields[1]);
+                // use `gID ~ globalID` as the index
+                final long gid_from = globalID(VertexType.Person, fromPersonID);
+                final long gid_to = globalID(VertexType.Loan, toLoanID);
                 // invert the edge direction while loading
-                final IEdge<Long, Null> edge = new ValueEdge<>(toLoanID, fromPersonID, new Null());
+                final IEdge<Long, Null> edge = new ValueEdge<>(gid_to, gid_from, new Null());
                 return Collections.singletonList(edge);
             }, // PersonApplyLoan.csv
     };

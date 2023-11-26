@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="discard sendMessageToNeighbors, use sendMessage with targetId instead" />
+    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="discard sendMessageToNeighbors, use sendMessage with targetId instead">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,6 +87,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "eden__refactored__on__windows",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -131,7 +138,7 @@
       <recent name="org.ember.TuGraphFinbench.Algorithms" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Case1">
+  <component name="RunManager" selected="Application.Case4">
     <configuration name="AllCases" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.AllCases" />
       <module name="tugraph-finbench" />
@@ -212,11 +219,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Case4" />
         <item itemvalue="Application.Case1" />
         <item itemvalue="Application.AllCases" />
         <item itemvalue="Application.GoogleResourcesLoader" />
         <item itemvalue="Application.InputArgs" />
-        <item itemvalue="Application.Case4" />
       </list>
     </recent_temporary>
   </component>
@@ -244,6 +251,7 @@
       <workItem from="1700897110438" duration="2466000" />
       <workItem from="1700904219587" duration="15507000" />
       <workItem from="1700924047102" duration="2402000" />
+      <workItem from="1700982314007" duration="1851000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />

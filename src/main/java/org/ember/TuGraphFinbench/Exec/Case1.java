@@ -34,6 +34,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
+import static org.ember.TuGraphFinbench.Util.globalID;
+
 public class Case1 {
 
     public static final Null nullEdgeProperty = new Null();
@@ -41,20 +43,6 @@ public class Case1 {
     public static final Logger LOGGER = LoggerFactory.getLogger(Case1.class);
     public static final String[] vertexFilePaths = {"Person.csv", "Account.csv", "Loan.csv"};
     public static final String[] edgeFilePaths = {"PersonOwnAccount.csv", "AccountTransferAccount.csv", "LoanDepositAccount.csv"};
-    public static long globalID(VertexType t, long originID) { 
-      long flag = 0;
-      if (t == VertexType.Person) {
-        flag = 1;
-      }
-      if (t == VertexType.Account) {
-        flag = 2;
-      }
-      if (t == VertexType.Loan) {
-        flag = 3;
-      }
-      long newID = (originID << 2) | flag;
-      return newID;
-    }
     public static final FileLineParser<IVertex<Long, Case1Vertex>>[] vertexParsers = new FileLineParser[]{
             (final String line) -> {
                 final String[] fields = line.split("\\|");
@@ -115,6 +103,7 @@ public class Case1 {
     };
     public static String RESULT_FILE_PATH = "./target/tmp/data/result/finbench";
     public static String ABSOLUTE_PREFIX = null;
+
 
     private static IPipelineResult<?> submit(Environment environment) {
         final Pipeline pipeline = PipelineFactory.buildPipeline(environment);

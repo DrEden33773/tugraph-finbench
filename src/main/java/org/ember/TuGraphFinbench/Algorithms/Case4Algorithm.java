@@ -62,7 +62,6 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
                 return;
             }
             this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), currV.toCase4Message()));
-//            this.context.sendMessageToNeighbors(currV.toCase4Message());
         }
 
         void from0Layer(final Iterator<Case4Message> messageIterator) {
@@ -79,7 +78,6 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
             currV.setLayer0LoanAmountSum(currVLoanAmountSum);
             // send message
             this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), currV.toCase4Message()));
-//            this.context.sendMessageToNeighbors(currV.toCase4Message());
         }
 
         void from1Layer(final Iterator<Case4Message> messageIterator) {
@@ -100,7 +98,6 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
             }
             // send message
             this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), currV.toCase4Message()));
-//            this.context.sendMessageToNeighbors(currV.toCase4Message());
         }
 
         void from2Layer(final Iterator<Case4Message> messageIterator) {
@@ -132,7 +129,6 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
             }
             // send message
             this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), currV.toCase4Message()));
-//            this.context.sendMessageToNeighbors(currV.toCase4Message());
         }
 
         void from3Layer(final Iterator<Case4Message> messageIterator) {
