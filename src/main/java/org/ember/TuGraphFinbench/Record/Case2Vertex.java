@@ -12,7 +12,7 @@ import java.util.List;
 public class Case2Vertex {
     long ID;
     long ringCount;
-    List<MutablePair<Long, Long>> prevAncestors;
+    //List<MutablePair<Long, Long>> prevAncestors;
 
     public Case2Cell toCase2Cell() {
         return new Case2Cell(ID, ringCount);
