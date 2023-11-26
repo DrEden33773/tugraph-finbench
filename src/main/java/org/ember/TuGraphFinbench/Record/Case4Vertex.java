@@ -28,7 +28,11 @@ public class Case4Vertex {
                 layer1LoanAmountSum,
                 layer2LoanAmountSum,
                 layer3LoanAmountSum,
-                highestLayer
+                highestLayer,
+                layer0LoanAmountMap,
+                layer1LoanAmountMap,
+                layer2LoanAmountMap,
+                layer3LoanAmountMap
         );
     }
 

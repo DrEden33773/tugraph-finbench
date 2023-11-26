@@ -8,7 +8,9 @@ import com.antgroup.geaflow.model.common.Null;
 import org.ember.TuGraphFinbench.Record.Case4Vertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 
 public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null, Case4Message> {
@@ -70,12 +72,15 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
                 return;
             }
             // update: self loan amount sum (layer0)
-            double currVLoanAmountSum = currV.getLayer0LoanAmountSum();
             currV.setHighestLayer(0);
+//            double currVLoanAmountSum = currV.getLayer0LoanAmountSum();
+            final Map<Long, Double> layer0LoanAmountMap = new HashMap<>();
             while (messageIterator.hasNext()) {
-                currVLoanAmountSum += messageIterator.next().layer0LoanAmountSum;
+                layer0LoanAmountMap.putAll(messageIterator.next().layer0LoanAmountMap);
+//                currVLoanAmountSum += messageIterator.next().layer0LoanAmountSum;
             }
-            currV.setLayer0LoanAmountSum(currVLoanAmountSum);
+            currV.setLayer0LoanAmountMap(layer0LoanAmountMap);
+//            currV.setLayer0LoanAmountSum(currVLoanAmountSum);
             // send message
             this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), currV.toCase4Message()));
         }
