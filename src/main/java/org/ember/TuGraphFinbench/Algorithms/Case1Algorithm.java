@@ -10,8 +10,10 @@ import org.ember.TuGraphFinbench.Record.Case1Vertex;
 import org.ember.TuGraphFinbench.Record.VertexType;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.HashMap;
 
-public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null, ImmutablePair<Integer, Double>> {
+public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null, ImmutablePair<Long, Double>> {
 
     public Case1Algorithm() {
         super(4);
@@ -23,19 +25,19 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
     }
 
     @Override
-    public VertexCentricCombineFunction<ImmutablePair<Integer, Double>> getCombineFunction() {
+    public VertexCentricCombineFunction<ImmutablePair<Long, Double>> getCombineFunction() {
         return null;
     }
 
     @Override
-    public VertexCentricComputeFunction<Long, Case1Vertex, Null, ImmutablePair<Integer, Double>> getComputeFunction() {
+    public VertexCentricComputeFunction<Long, Case1Vertex, Null, ImmutablePair<Long, Double>> getComputeFunction() {
         return new Case1ComputeFunction();
     }
 
-    public static class Case1ComputeFunction extends AbstractVcFunc<Long, Case1Vertex, Null, ImmutablePair<Integer, Double>> {
+    public static class Case1ComputeFunction extends AbstractVcFunc<Long, Case1Vertex, Null, ImmutablePair<Long, Double>> {
 
         @Override
-        public void compute(final Long vertexId, final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void compute(final Long vertexId, final Iterator<ImmutablePair<Long, Double>> messageIterator) {
             switch ((int) this.context.getIterationId()) {
                 case 1:
                     computeIter1();
@@ -60,80 +62,90 @@ public class Case1Algorithm extends VertexCentricCompute<Long, Case1Vertex, Null
                 return;
             }
             currVertex.setNthLayer(1);
-            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(1, currVertex.getLoanAmountSum())));
+            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(currVertex.getID(), currVertex.getLoanAmountSum())));
 //            this.context.sendMessageToNeighbors(new ImmutablePair<>(1, currVertex.getLoanAmountSum()));
         }
 
-        public void computeIter2(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void computeIter2(final Iterator<ImmutablePair<Long, Double>> messageIterator) {
             final Case1Vertex currVertex = this.context.vertex().get().getValue();
             if (currVertex.getVertexType() != VertexType.Account) {
                 return;
             }
             // update: layer0LoanAmountSum, nthLayer
             double loanAmountSum = currVertex.getLoanAmountSum();
+            Map<Long, Double> loanAmountMap = new HashMap<Long, Double>();
             while (messageIterator.hasNext()) {
-                final ImmutablePair<Integer, Double> message = messageIterator.next();
-                if (message.getLeft() == 1) {
-                    currVertex.setNthLayer(2);
-                    loanAmountSum += message.getRight();
-                } else {
-                    return; // does not satisfy: loan -> account
-                }
+                final ImmutablePair<Long, Double> message = messageIterator.next();
+                loanAmountMap.put(message.getLeft(), message.getRight());
             }
-            currVertex.setLoanAmountSum(loanAmountSum);
-            // send: layer0LoanAmountSum(updated)
-            double finalLoanAmountSum = loanAmountSum;
-            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(2, finalLoanAmountSum)));
+            //System.out.println("-----> Iter2: vertex " + currVertex.getID() + " get " + loanAmountMap.size() + " loans.");
+            this.context.edges().getOutEdges().forEach(edge -> {
+              if (((edge.getTargetId() & 3) == 2) && (edge.getTargetId() != edge.getSrcId())) {
+                // the target is an account vertex
+                // send the received loans to its outgoing account neighbors
+                for(Map.Entry<Long, Double> entry: loanAmountMap.entrySet()) {
+                  this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(entry.getKey(), entry.getValue()));
+                }
+              }
+            });
+            //this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(2, finalLoanAmountSum)));
 //            this.context.sendMessageToNeighbors(new ImmutablePair<>(2, loanAmountSum));
         }
 
-        public void computeIter3(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void computeIter3(final Iterator<ImmutablePair<Long, Double>> messageIterator) {
             final Case1Vertex currVertex = this.context.vertex().get().getValue();
             if (currVertex.getVertexType() != VertexType.Account) {
                 return;
             }
             // update: layer0LoanAmountSum, nthLayer
+            Map<Long, Double> loanAmountMap = new HashMap<Long, Double>();
             double loanAmountSum = currVertex.getLoanAmountSum();
             while (messageIterator.hasNext()) {
-                final ImmutablePair<Integer, Double> message = messageIterator.next();
-                if (message.getLeft() == 2) {
-                    currVertex.setNthLayer(3);
-                    loanAmountSum += message.getRight();
-                } else {
-                    return; // does not satisfy: (loan -> account) -> account
-                }
+                final ImmutablePair<Long, Double> message = messageIterator.next();
+                loanAmountMap.put(message.getLeft(), message.getRight());
             }
-            currVertex.setLoanAmountSum(loanAmountSum);
-            // send: layer0LoanAmountSum(updated)
-            double finalLoanAmountSum = loanAmountSum;
-            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(3, finalLoanAmountSum)));
+            //System.out.println("-----> Iter3: vertex " + currVertex.getID() + " get " + loanAmountMap.size() + " loans.");
+            this.context.edges().getOutEdges().forEach(edge -> {
+              if ((edge.getTargetId() & 3)  == 1) {
+                // the target is a Person vertex
+                // send the received loans to its outgoing Person neighbors
+                for(Map.Entry<Long, Double> entry: loanAmountMap.entrySet()) {
+                  this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(entry.getKey(), entry.getValue()));
+                }
+              }
+            });
+
+//            this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), new ImmutablePair<>(3, finalLoanAmountSum)));
 //            this.context.sendMessageToNeighbors(new ImmutablePair<>(3, loanAmountSum));
         }
 
-        public void computeIter4(final Iterator<ImmutablePair<Integer, Double>> messageIterator) {
+        public void computeIter4(final Iterator<ImmutablePair<Long, Double>> messageIterator) {
             final Case1Vertex currVertex = this.context.vertex().get().getValue();
             if (currVertex.getVertexType() != VertexType.Person) {
                 return;
             }
             // update: layer0LoanAmountSum
-            double loanAmountSum = currVertex.getLoanAmountSum();
+            Map<Long, Double> loanAmountMap = new HashMap<Long, Double>();
             while (messageIterator.hasNext()) {
-                final ImmutablePair<Integer, Double> message = messageIterator.next();
-                if (message.getLeft() == 3) {
-                    currVertex.setNthLayer(4);
-                    loanAmountSum += message.getRight();
-                } else {
-                    return; // does not satisfy: ((loan -> account) -> account) -> person
-                }
+                final ImmutablePair<Long, Double> message = messageIterator.next();
+                loanAmountMap.put(message.getLeft(), message.getRight());
+            }
+
+            if (loanAmountMap.size() != 0) {
+              currVertex.setNthLayer(4);
+              double loanAmountSum = 0.0;
+              for(Map.Entry<Long, Double> entry: loanAmountMap.entrySet()) {
+                loanAmountSum += entry.getValue();
+              }
+              loanAmountSum /= 1e8;
+              currVertex.setLoanAmountSum(loanAmountSum);
             }
 //            currVertex.setLoanAmountSum(loanAmountSum);
             // unit transfer
-            loanAmountSum /= 1e8;
             // #.00 -> deprecated, let `String.format("%.2f", loanAmountSum)` do this instead
             // final DecimalFormat dFormat = new DecimalFormat("#.00");
             // loanAmountSum = Double.parseDouble(dFormat.format(loanAmountSum));
             // update: layer0LoanAmountSum
-            currVertex.setLoanAmountSum(loanAmountSum);
         }
     }
 }
