@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="cannot totally make case4 execute correctly, need help.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/RCase4Algorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/RCase4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Record/RCase4Vertex.java" afterDir="false" />
+    <list default="true" id="95361f4c-c335-4c5a-aab2-b03a25d60f3f" name="Changes" comment="refactored R-Case4, which is not correct">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case2Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case2Algorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/Case4Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/RCase4Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Algorithms/RCase4Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/AllCases.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/AllCases.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ember/TuGraphFinbench/Exec/Case4.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -139,7 +139,20 @@
       <recent name="org.ember.TuGraphFinbench.Algorithms" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.RCase4">
+  <component name="RunManager" selected="Application.AllCases">
+    <configuration name="AllCases" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.AllCases" />
+      <module name="tugraph-finbench" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ember.TuGraphFinbench.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Case1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case1" />
       <module name="tugraph-finbench" />
@@ -179,19 +192,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Case4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.Case4" />
-      <module name="tugraph-finbench" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ember.TuGraphFinbench.Exec.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="RCase4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ember.TuGraphFinbench.Exec.RCase4" />
       <module name="tugraph-finbench" />
@@ -207,11 +207,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RCase4" />
-        <item itemvalue="Application.Case2" />
-        <item itemvalue="Application.Case4" />
-        <item itemvalue="Application.Case3" />
+        <item itemvalue="Application.AllCases" />
         <item itemvalue="Application.Case1" />
+        <item itemvalue="Application.Case2" />
+        <item itemvalue="Application.Case3" />
+        <item itemvalue="Application.RCase4" />
       </list>
     </recent_temporary>
   </component>
@@ -239,7 +239,7 @@
       <workItem from="1700897110438" duration="2466000" />
       <workItem from="1700904219587" duration="15507000" />
       <workItem from="1700924047102" duration="2402000" />
-      <workItem from="1700982314007" duration="26597000" />
+      <workItem from="1700982314007" duration="30016000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -401,7 +401,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701007460892</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="refactored R-Case4, which is not correct">
+      <option name="closed" value="true" />
+      <created>1701010383217</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1701010383217</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,7 +447,8 @@
     <MESSAGE value="prepare to refactor: case4" />
     <MESSAGE value="refactoring: case4" />
     <MESSAGE value="cannot totally make case4 execute correctly, need help." />
-    <option name="LAST_COMMIT_MESSAGE" value="cannot totally make case4 execute correctly, need help." />
+    <MESSAGE value="refactored R-Case4, which is not correct" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored R-Case4, which is not correct" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

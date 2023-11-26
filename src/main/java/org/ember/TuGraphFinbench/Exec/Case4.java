@@ -37,6 +37,7 @@ import java.util.HashMap;
 
 import static org.ember.TuGraphFinbench.Util.globalID;
 
+@Deprecated
 public class Case4 {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(Case4.class);

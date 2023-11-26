@@ -15,13 +15,11 @@ public class Case4Algorithm extends VertexCentricCompute<Long, Case4Vertex, Null
 
     public Case4Algorithm() {
         super(5);
-//        super(3);
     }
 
     public Case4Algorithm(long iterations) {
         super(iterations);
         assert iterations == 5;
-//        assert iterations == 3;
     }
 
     @Override

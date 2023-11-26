@@ -14,7 +14,7 @@ import java.util.Iterator;
 public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Boolean, ImmutableTriple<Long, long[], long[]>> {
 
     public Case2Algorithm() {
-        super(4);
+        super(2);
     }
 
     public Case2Algorithm(long iterations) {
