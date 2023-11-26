@@ -5,6 +5,8 @@ import lombok.Data;
 import org.ember.TuGraphFinbench.Algorithms.Case4Message;
 import org.ember.TuGraphFinbench.Cell.Case4Cell;
 
+import java.util.Map;
+
 @Data
 @AllArgsConstructor
 public class Case4Vertex {
@@ -15,6 +17,10 @@ public class Case4Vertex {
     double layer2LoanAmountSum;
     double layer3LoanAmountSum;
     int highestLayer;
+    Map<Long, Double> layer0LoanAmountMap;
+    Map<Long, Double> layer1LoanAmountMap;
+    Map<Long, Double> layer2LoanAmountMap;
+    Map<Long, Double> layer3LoanAmountMap;
 
     public Case4Message toCase4Message() {
         return new Case4Message(

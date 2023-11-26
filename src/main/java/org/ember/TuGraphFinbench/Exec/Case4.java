@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import static org.ember.TuGraphFinbench.Util.globalID;
 
@@ -45,7 +46,8 @@ public class Case4 {
             (final String line) -> {
                 final String[] fields = line.split("\\|");
                 final long personID = Long.parseLong(fields[0]);
-                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Person, personID, 0, 0, 0, 0, 0);
+                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Person, personID, 0, 0, 0, 0, 0,
+                        new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
                 // use `gID ~ globalID` as the index
                 final long gID = globalID(VertexType.Person, personID);
                 final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(gID, case4Vertex);
@@ -55,7 +57,8 @@ public class Case4 {
                 final String[] fields = line.split("\\|");
                 final long loanID = Long.parseLong(fields[0]);
                 final double loanAmount = Double.parseDouble(fields[1]);
-                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Loan, loanID, loanAmount, 0, 0, 0, 0);
+                final Case4Vertex case4Vertex = new Case4Vertex(VertexType.Loan, loanID, loanAmount, 0, 0, 0, 0,
+                        new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>());
                 // use `gID ~ globalID` as the index
                 final long gID = globalID(VertexType.Loan, loanID);
                 final IVertex<Long, Case4Vertex> vertex = new ValueVertex<>(gID, case4Vertex);

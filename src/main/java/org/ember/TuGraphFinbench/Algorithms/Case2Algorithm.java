@@ -58,7 +58,6 @@ public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null
             List<MutablePair<Long, Long>> toSend = new ArrayList<>(1);
             toSend.add(new MutablePair<>(vertexId, vertexId));
             this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), toSend));
-//            this.context.sendMessageToNeighbors(toSend);
         }
 
         void computeIter2(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
@@ -72,7 +71,6 @@ public class Case2Algorithm extends VertexCentricCompute<Long, Case2Vertex, Null
                 toSend.add(toAdd);
             });
             this.context.edges().getOutEdges().forEach(edge -> this.context.sendMessage(edge.getTargetId(), toSend));
-//            this.context.sendMessageToNeighbors(toSend);
         }
 
         void computeIter3(final Long vertexId, final Iterator<List<MutablePair<Long, Long>>> messageIterator) {
