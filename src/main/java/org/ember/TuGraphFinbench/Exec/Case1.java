@@ -36,6 +36,8 @@ import java.util.Collections;
 
 public class Case1 {
 
+    public static final Null nullEdgeProperty = new Null();
+
     public static final Logger LOGGER = LoggerFactory.getLogger(Case1.class);
     public static final String[] vertexFilePaths = {"Person.csv", "Account.csv", "Loan.csv"};
     public static final String[] edgeFilePaths = {"PersonOwnAccount.csv", "AccountTransferAccount.csv", "LoanDepositAccount.csv"};
@@ -50,7 +52,7 @@ public class Case1 {
       if (t == VertexType.Loan) {
         flag = 3;
       }
-      long newID = originID << 2 | flag;
+      long newID = (originID << 2) | flag;
       return newID;
     }
     public static final FileLineParser<IVertex<Long, Case1Vertex>>[] vertexParsers = new FileLineParser[]{
@@ -88,7 +90,7 @@ public class Case1 {
                 final long gid_from = globalID(VertexType.Person, fromPersonID);
                 final long gid_to = globalID(VertexType.Account, toAccountID);
                 // invert the edge direction while loading
-                final IEdge<Long, Null> edge = new ValueEdge<>(gid_to, gid_from, new Null());
+                final IEdge<Long, Null> edge = new ValueEdge<>(gid_to, gid_from, nullEdgeProperty);
                 return Collections.singletonList(edge);
             }, // PersonOwnAccount.csv
             (final String line) -> {
@@ -98,7 +100,7 @@ public class Case1 {
                 final long gid_from = globalID(VertexType.Account, fromAccountID);
                 final long gid_to = globalID(VertexType.Account, toAccountID);
                 //final IEdge<Long, Null> edge = new ValueEdge<>(fromAccountID, toAccountID, new Null());
-                final IEdge<Long, Null> edge = new ValueEdge<>(gid_from, gid_to, new Null());
+                final IEdge<Long, Null> edge = new ValueEdge<>(gid_from, gid_to, nullEdgeProperty);
                 return Collections.singletonList(edge);
             }, // AccountTransferAccount.csv
             (final String line) -> {
@@ -107,7 +109,7 @@ public class Case1 {
                 final long toAccountID = Long.parseLong(fields[1]);
                 long gid_from = globalID(VertexType.Loan, fromLoanID);
                 long gid_to = globalID(VertexType.Account, toAccountID);
-                final IEdge<Long, Null> edge = new ValueEdge<>(gid_from, gid_to, new Null());
+                final IEdge<Long, Null> edge = new ValueEdge<>(gid_from, gid_to, nullEdgeProperty);
                 return Collections.singletonList(edge);
             }, // LoanDepositAccount.csv
     };
